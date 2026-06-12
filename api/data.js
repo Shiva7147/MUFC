@@ -88,7 +88,7 @@ module.exports = async (req, res) => {
 
     // Fallback: Read local data.json included in the static build
     try {
-      const localPath = path.join(process.cwd(), 'data.json');
+      const localPath = path.join(__dirname, '../data.json');
       if (fs.existsSync(localPath)) {
         const localData = fs.readFileSync(localPath, 'utf8');
         res.writeHead(200, { 'Content-Type': 'application/json' });

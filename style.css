@@ -1171,6 +1171,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ─── FOOTBALL SECTION ───────────────────── */
 .football-section {
+  position: relative;
   overflow: hidden;
 }
 .football-bg {

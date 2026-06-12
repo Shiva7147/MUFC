@@ -7,16 +7,24 @@
 
 // ─── DOM READY ──────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  initNavbar();
-  initHamburger();
-  initScrollAnimations();
-  initHeroParticles();
-  initSmoothScroll();
-  initActiveNavLinks();
-  initScrollIndicator();
-  initDynamicData();
-  initModals();
-  initAdminDashboard();
+  const safeInit = (name, fn) => {
+    try {
+      fn();
+    } catch (err) {
+      console.error(`Error during initialization of ${name}:`, err);
+    }
+  };
+
+  safeInit('Navbar', initNavbar);
+  safeInit('Hamburger', initHamburger);
+  safeInit('ScrollAnimations', initScrollAnimations);
+  safeInit('HeroParticles', initHeroParticles);
+  safeInit('SmoothScroll', initSmoothScroll);
+  safeInit('ActiveNavLinks', initActiveNavLinks);
+  safeInit('ScrollIndicator', initScrollIndicator);
+  safeInit('DynamicData', initDynamicData);
+  safeInit('Modals', initModals);
+  safeInit('AdminDashboard', initAdminDashboard);
 });
 
 // ─── NAVBAR ─────────────────────────────────────
@@ -109,6 +117,9 @@ function initHamburger() {
 // ─── SMOOTH SCROLL ──────────────────────────────
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    const href = anchor.getAttribute('href');
+    if (href === '#meetups' || href === '#community' || href === '#contact') return; // Handled by modal script
+    
     anchor.addEventListener('click', function(e) {
       const target = document.querySelector(this.getAttribute('href'));
       if (!target) return;
@@ -366,15 +377,66 @@ let verifiedPassword = '';
 
 // ─── DYNAMIC DATA LOADING ───────────────────────
 async function initDynamicData() {
+  const defaults = {
+    screenings: {
+      featured: {
+        competition: "Premier League",
+        homeTeam: "MAN UTD",
+        awayTeam: "CHELSEA",
+        date: "Saturday, 25 Oct at 9:00 PM IST",
+        venue: "Buffalo Wild Wings, Indiranagar, Bengaluru",
+        rsvpLink: "https://tr.ee/LWCkHGoM0q",
+        instaLink: "https://tr.ee/LWCkHGoM0q",
+        posterUrl: "images/screening2.jpg"
+      }
+    },
+    announcements: [
+      { id: 1, badge: "Pinned", title: "OUM Memberships Now Open", description: "Become an Official United Member today. Join MUSCB and be part of the official supporter community in Bengaluru. Registration is open now.", link: "https://tr.ee/yYmx1pF_Zm" },
+      { id: 2, badge: "Screening", title: "Next Match Screening", description: "Details for the next United screening will be announced on our Instagram and WhatsApp community. Stay connected for venue and timing updates.", link: "https://tr.ee/LWCkHGoM0q" },
+      { id: 3, badge: "Event", title: "Upcoming Fan Meetup", description: "United Fans Assemble is coming. RSVP through our link or WhatsApp. All MUSCB members and Manchester United fans in Bengaluru are welcome.", link: "https://tr.ee/yYmx1pF_Zm" }
+    ],
+    gallery: [
+      { id: 1, imageUrl: "images/gallery1.jpg", title: "Fan Meetup", type: "tall" },
+      { id: 2, imageUrl: "images/gallery1.jpg", title: "Match Celebration", type: "standard" },
+      { id: 3, imageUrl: "images/screening2.jpg", title: "Match Screening", type: "standard" },
+      { id: 4, imageUrl: "images/football_team.jpg", title: "MUSCB FC", type: "wide" }
+    ]
+  };
+
+  function validateData(data) {
+    return data && 
+           data.screenings && 
+           data.screenings.featured && 
+           data.announcements && 
+           Array.isArray(data.announcements) && 
+           data.gallery && 
+           Array.isArray(data.gallery);
+  }
+
   // Try loading from localStorage first to keep it instant
   const cachedData = localStorage.getItem('muscb_site_data');
   if (cachedData) {
     try {
-      siteData = JSON.parse(cachedData);
-      renderAllContent();
+      const parsed = JSON.parse(cachedData);
+      if (validateData(parsed)) {
+        siteData = parsed;
+      } else {
+        console.warn('Cached data structure is invalid. Using default values.');
+        siteData = defaults;
+      }
     } catch (e) {
       console.error('Error parsing cached data', e);
+      siteData = defaults;
     }
+  } else {
+    siteData = defaults;
+  }
+
+  // Initial render with cache/defaults
+  try {
+    renderAllContent();
+  } catch (e) {
+    console.error('Error in initial render:', e);
   }
 
   // Fetch fresh data from API
@@ -382,10 +444,13 @@ async function initDynamicData() {
     const res = await fetch('/api/data');
     if (res.ok) {
       const freshData = await res.json();
-      siteData = freshData;
-      // Cache locally
-      localStorage.setItem('muscb_site_data', JSON.stringify(siteData));
-      renderAllContent();
+      if (validateData(freshData)) {
+        siteData = freshData;
+        localStorage.setItem('muscb_site_data', JSON.stringify(siteData));
+        renderAllContent();
+      } else {
+        console.warn('API data structure is invalid. Keeping current data.');
+      }
       
       // Update Admin UI status if logged in
       const statusText = document.getElementById('db-status-text');
@@ -396,11 +461,7 @@ async function initDynamicData() {
       }
     }
   } catch (err) {
-    console.warn('API unavailable, falling back to cache/defaults:', err);
-    // Render defaults if no cache existed
-    if (!cachedData) {
-      renderAllContent();
-    }
+    console.warn('API unavailable, using cache/defaults:', err);
   }
 }
 
@@ -492,6 +553,11 @@ function renderAnnouncements(announcements) {
   const container = document.getElementById('announcements-dynamic-container');
   if (!container) return;
 
+  if (!announcements || !Array.isArray(announcements)) {
+    container.innerHTML = '<p class="error-msg" style="text-align: center; color: var(--white-60); width: 100%; grid-column: 1/-1;">Announcements currently unavailable.</p>';
+    return;
+  }
+
   container.innerHTML = announcements.map((ann, i) => {
     let badgeClass = 'event-badge';
     let iconSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
@@ -529,6 +595,11 @@ function renderGallery(gallery) {
   const container = document.getElementById('gallery-dynamic-container');
   if (!container) return;
 
+  if (!gallery || !Array.isArray(gallery)) {
+    container.innerHTML = '<p class="error-msg" style="text-align: center; color: var(--white-60); width: 100%; grid-column: 1/-1;">Gallery currently unavailable.</p>';
+    return;
+  }
+
   container.innerHTML = gallery.map((item) => {
     let typeClass = '';
     if (item.type === 'tall') typeClass = 'tall';
@@ -550,7 +621,7 @@ function initModals() {
   // Intercept trigger links
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     const href = link.getAttribute('href');
-    if (href === '#meetups' || href === '#football' || href === '#community' || href === '#contact') {
+    if (href === '#meetups' || href === '#community' || href === '#contact') {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const modalId = `${href.substring(1)}-modal`;

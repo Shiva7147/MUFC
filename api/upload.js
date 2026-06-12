@@ -126,7 +126,7 @@ module.exports = async (req, res) => {
     } else {
       // Local development -> Write directly to local images directory
       try {
-        const localImagesDir = path.join(process.cwd(), 'images');
+        const localImagesDir = path.join(__dirname, '../images');
         if (!fs.existsSync(localImagesDir)) {
           fs.mkdirSync(localImagesDir, { recursive: true });
         }
