@@ -36,23 +36,19 @@
  </div>
  </a>
  
+  
   <ul class="nav-links" id="navLinks">
     <li><a href="#about" class="nav-link">About</a></li>
     <li><a href="#membership" class="nav-link">Membership</a></li>
     <li><a href="#screenings" class="nav-link">Screenings</a></li>
     <li><a href="#meetups" class="nav-link modal-trigger-link">Meetups</a></li>
-    <li><a href="#football" class="nav-link modal-trigger-link">Football</a></li>
+    <li><a href="#football" class="nav-link modal-trigger-link">Matchdays</a></li>
     <li><a href="#community" class="nav-link modal-trigger-link">Red Army</a></li>
     <li><a href="#contact" class="nav-link">Contact</a></li>
     <li>
       <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-nav-cta" id="nav-join-btn">
         Join Now
       </a>
-    </li>
-    <li>
-      <button class="nav-admin-btn" id="navbar-admin-btn" aria-label="Admin Access">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </button>
     </li>
   </ul>
  <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
@@ -1029,12 +1025,12 @@
       <div class="admin-dashboard-container">
         <div class="admin-dashboard-header">
           <div class="header-title-row">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-            <h2>Bengaluru's Red Devils &mdash; Admin Panel</h2>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            <h2>MUSCB Admin Panel</h2>
           </div>
           <div class="header-status">
             <span class="status-indicator live"></span>
-            <span id="db-status-text">Connected (Local Dev)</span>
+            <span id="db-status-text">Connected</span>
           </div>
         </div>
 
@@ -1049,41 +1045,47 @@
           <div class="tab-pane active" id="tab-screenings">
             <form id="admin-screening-form" class="admin-form">
               <h3>Featured Match Screening</h3>
+              
+              <!-- Direct Image Uploader -->
+              <div class="form-group" style="margin-bottom: 20px;">
+                <label>Poster Picture (Direct Upload)</label>
+                <input type="file" id="screen-file-input" accept="image/*" />
+                <span class="upload-help" id="screen-upload-status">Select a photo from your device to upload directly.</span>
+                <input type="hidden" id="screen-poster" />
+                <div id="screen-poster-preview" class="image-preview-thumbnail">No Poster Uploaded</div>
+              </div>
+
               <div class="form-grid">
                 <div class="form-group">
                   <label for="screen-comp">Competition</label>
-                  <input type="text" id="screen-comp" required />
+                  <input type="text" id="screen-comp" placeholder="e.g. Premier League" required />
                 </div>
                 <div class="form-group">
                   <label for="screen-home">Home Team</label>
-                  <input type="text" id="screen-home" required />
+                  <input type="text" id="screen-home" placeholder="e.g. MAN UTD" required />
                 </div>
                 <div class="form-group">
                   <label for="screen-away">Away Team (Opponent)</label>
-                  <input type="text" id="screen-away" required />
+                  <input type="text" id="screen-away" placeholder="e.g. Chelsea" required />
                 </div>
                 <div class="form-group">
                   <label for="screen-date">Date & Time</label>
-                  <input type="text" id="screen-date" required />
+                  <input type="text" id="screen-date" placeholder="e.g. Saturday, 18 Oct at 7:30 PM" required />
                 </div>
                 <div class="form-group">
                   <label for="screen-venue">Venue Info</label>
-                  <input type="text" id="screen-venue" required />
+                  <input type="text" id="screen-venue" placeholder="e.g. Church Street Social, Bengaluru" required />
                 </div>
                 <div class="form-group">
                   <label for="screen-rsvp">RSVP Link (Linktree/Form)</label>
-                  <input type="url" id="screen-rsvp" required />
+                  <input type="url" id="screen-rsvp" placeholder="https://tr.ee/..." required />
                 </div>
                 <div class="form-group">
-                  <label for="screen-insta">Instagram Poster Link</label>
-                  <input type="url" id="screen-insta" required />
-                </div>
-                <div class="form-group">
-                  <label for="screen-poster">Poster Image URL (or path)</label>
-                  <input type="text" id="screen-poster" required />
+                  <label for="screen-insta">Instagram Event Post Link</label>
+                  <input type="url" id="screen-insta" placeholder="https://instagram.com/..." required />
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary">Save Screening Details</button>
+              <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Save Screening Details</button>
             </form>
           </div>
 
@@ -1100,28 +1102,28 @@
                 <h3>Add New Announcement</h3>
                 <div class="form-group">
                   <label for="ann-title">Title</label>
-                  <input type="text" id="ann-title" required />
+                  <input type="text" id="ann-title" placeholder="e.g. Screening Confirmed!" required />
                 </div>
                 <div class="form-group">
-                  <label for="ann-badge">Badge (Category)</label>
+                  <label for="ann-badge">Category</label>
                   <select id="ann-badge">
-                    <option value="Pinned">Pinned</option>
-                    <option value="Screening">Screening</option>
-                    <option value="Event">Event</option>
-                    <option value="Football">Football</option>
-                    <option value="Giveaway">Giveaway</option>
-                    <option value="Community">Community</option>
+                    <option value="Pinned">📌 Pinned</option>
+                    <option value="Screening">🏆 Match Screening</option>
+                    <option value="Event">📅 Event / Meetup</option>
+                    <option value="Football">⚽ Football Team</option>
+                    <option value="Giveaway">🎁 Giveaway / Offer</option>
+                    <option value="Community">📢 Red Army Community</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="ann-desc">Description</label>
-                  <textarea id="ann-desc" rows="3" required></textarea>
+                  <label for="ann-desc">Short Description</label>
+                  <textarea id="ann-desc" rows="3" placeholder="Write a short summary (1-2 sentences)..." required></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="ann-link">Action Link</label>
-                  <input type="url" id="ann-link" required />
+                  <label for="ann-link">Action Link (Form/Instagram)</label>
+                  <input type="url" id="ann-link" placeholder="https://..." required />
                 </div>
-                <button type="submit" class="btn btn-primary">Add Announcement</button>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Add Announcement</button>
               </form>
             </div>
           </div>
@@ -1130,30 +1132,36 @@
           <div class="tab-pane" id="tab-gallery">
             <div class="tab-split">
               <div class="gallery-list-wrapper">
-                <h3>Current Gallery Images</h3>
+                <h3>Current Gallery Photos</h3>
                 <div id="admin-gallery-list" class="admin-items-list">
                   <!-- Rendered dynamically -->
                 </div>
               </div>
               <form id="admin-gallery-form" class="admin-form">
-                <h3>Add New Gallery Image</h3>
+                <h3>Add New Photo</h3>
+                
+                <!-- Direct Image Uploader -->
                 <div class="form-group">
-                  <label for="gal-url">Image URL (or path)</label>
-                  <input type="text" id="gal-url" required />
+                  <label>Upload Photo</label>
+                  <input type="file" id="gal-file-input" accept="image/*" required />
+                  <span class="upload-help" id="gal-upload-status">Select a photo from your device.</span>
+                  <input type="hidden" id="gal-url" />
+                  <div id="gal-poster-preview" class="image-preview-thumbnail">No Photo Selected</div>
+                </div>
+
+                <div class="form-group" style="margin-top: 12px;">
+                  <label for="gal-title">Photo Description / Label</label>
+                  <input type="text" id="gal-title" placeholder="e.g. Manchester Derby Screening" required />
                 </div>
                 <div class="form-group">
-                  <label for="gal-title">Title / Label</label>
-                  <input type="text" id="gal-title" required />
-                </div>
-                <div class="form-group">
-                  <label for="gal-type">Layout Type</label>
+                  <label for="gal-type">Layout Grid Style</label>
                   <select id="gal-type">
-                    <option value="standard">Standard (Square)</option>
-                    <option value="tall">Tall (Vertical)</option>
-                    <option value="wide">Wide (Horizontal)</option>
+                    <option value="standard">Standard Square</option>
+                    <option value="tall">Tall Vertical</option>
+                    <option value="wide">Wide Horizontal</option>
                   </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Image to Gallery</button>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Add Photo to Gallery</button>
               </form>
             </div>
           </div>
@@ -1166,6 +1174,7 @@
       </div>
     </div>
   </div>
-</body>
+  
+  </body>
 </html>
 

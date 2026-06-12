@@ -687,6 +687,10 @@ function initAdminDashboard() {
     });
   });
 
+  // Bind direct image uploaders
+  bindImageUpload('screen-file-input', 'screen-upload-status', 'screen-poster', 'screen-poster-preview');
+  bindImageUpload('gal-file-input', 'gal-upload-status', 'gal-url', 'gal-poster-preview');
+
   // Bind form submissions
   const screeningForm = document.getElementById('admin-screening-form');
   if (screeningForm) {
@@ -700,7 +704,7 @@ function initAdminDashboard() {
         venue: document.getElementById('screen-venue').value,
         rsvpLink: document.getElementById('screen-rsvp').value,
         instaLink: document.getElementById('screen-insta').value,
-        posterUrl: document.getElementById('screen-poster').value
+        posterUrl: document.getElementById('screen-poster').value || 'images/screening2.jpg'
       };
       saveData();
     });
@@ -730,13 +734,23 @@ function initAdminDashboard() {
       e.preventDefault();
       const newImg = {
         id: Date.now(),
-        imageUrl: document.getElementById('gal-url').value,
+        imageUrl: document.getElementById('gal-url').value || 'images/stadium_hero.jpg',
         title: document.getElementById('gal-title').value,
         type: document.getElementById('gal-type').value
       };
       siteData.gallery.push(newImg);
       saveData();
       galForm.reset();
+      
+      // Reset preview
+      const preview = document.getElementById('gal-poster-preview');
+      if (preview) preview.innerHTML = 'No Photo Selected';
+      const statusEl = document.getElementById('gal-upload-status');
+      if (statusEl) {
+        statusEl.textContent = 'Select a photo from your device.';
+        statusEl.style.color = 'var(--white-50)';
+      }
+      
       populateGalleryList();
     });
   }
@@ -744,7 +758,6 @@ function initAdminDashboard() {
 
 // Populate Dash fields
 function populateDashboard() {
-  // Screenings Form Populate
   const featured = siteData.screenings.featured;
   document.getElementById('screen-comp').value = featured.competition;
   document.getElementById('screen-home').value = featured.homeTeam;
@@ -755,8 +768,89 @@ function populateDashboard() {
   document.getElementById('screen-insta').value = featured.instaLink;
   document.getElementById('screen-poster').value = featured.posterUrl;
 
+  const preview = document.getElementById('screen-poster-preview');
+  if (preview && featured.posterUrl) {
+    preview.innerHTML = `<img src="${featured.posterUrl}" alt="Current Poster" />`;
+  }
+
   populateAnnouncementsList();
   populateGalleryList();
+}
+
+// Image Upload Helper
+function bindImageUpload(fileInputId, statusId, hiddenInputId, previewId) {
+  const fileInput = document.getElementById(fileInputId);
+  const statusEl = document.getElementById(statusId);
+  const hiddenInput = document.getElementById(hiddenInputId);
+  const previewEl = document.getElementById(previewId);
+
+  if (!fileInput) return;
+
+  fileInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (statusEl) {
+      statusEl.textContent = 'Reading photo...';
+      statusEl.style.color = 'var(--gold)';
+    }
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64Data = reader.result.split(',')[1];
+      
+      if (statusEl) {
+        statusEl.textContent = 'Uploading to database...';
+      }
+
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            password: verifiedPassword,
+            fileName: file.name,
+            fileData: base64Data
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.url) {
+          hiddenInput.value = result.url;
+          if (previewEl) {
+            previewEl.innerHTML = `<img src="${result.url}" alt="Uploaded preview" />`;
+          }
+          if (statusEl) {
+            statusEl.textContent = 'Upload success! Ready to save.';
+            statusEl.style.color = '#2ecc71';
+          }
+        } else {
+          if (statusEl) {
+            statusEl.textContent = 'Upload failed: ' + (result.error || 'API Error');
+            statusEl.style.color = '#ff4d4d';
+          }
+        }
+      } catch (err) {
+        console.error('Upload network error:', err);
+        if (statusEl) {
+          statusEl.textContent = 'Upload error: check connection.';
+          statusEl.style.color = '#ff4d4d';
+        }
+      }
+    };
+
+    reader.onerror = () => {
+      if (statusEl) {
+        statusEl.textContent = 'Failed to read photo file.';
+        statusEl.style.color = '#ff4d4d';
+      }
+    };
+
+    reader.readAsDataURL(file);
+  });
 }
 
 // Announcements Admin List

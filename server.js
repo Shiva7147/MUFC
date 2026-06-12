@@ -78,6 +78,64 @@ const server = http.createServer((req, res) => {
       });
       return;
     }
+  }
+
+  // Intercept upload API route for local development
+  if (urlPath === '/api/upload') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200);
+      res.end();
+      return;
+    }
+
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        try {
+          const payload = JSON.parse(body);
+          
+          if (payload.password !== 'reddevils2026') {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: 'Unauthorized' }));
+            return;
+          }
+
+          const { fileName, fileData } = payload;
+          if (!fileName || !fileData) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: 'Missing fileName or fileData' }));
+            return;
+          }
+
+          const cleanFileName = Date.now() + '-' + fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
+          const localImagesDir = path.join(ROOT, 'images');
+          if (!fs.existsSync(localImagesDir)) {
+            fs.mkdirSync(localImagesDir, { recursive: true });
+          }
+
+          const localFilePath = path.join(localImagesDir, cleanFileName);
+          const buffer = Buffer.from(fileData, 'base64');
+          fs.writeFile(localFilePath, buffer, (err) => {
+            if (err) {
+              res.writeHead(500, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ success: false, error: 'Failed to write local image' }));
+              return;
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, url: 'images/' + cleanFileName }));
+          });
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: 'Invalid JSON payload' }));
+        }
+      });
+      return;
+    }
 
     res.writeHead(405, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'Method Not Allowed' }));
