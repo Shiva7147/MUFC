@@ -550,7 +550,7 @@ function initModals() {
   // Intercept trigger links
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     const href = link.getAttribute('href');
-    if (href === '#meetups' || href === '#football' || href === '#community') {
+    if (href === '#meetups' || href === '#football' || href === '#community' || href === '#contact') {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const modalId = `${href.substring(1)}-modal`;

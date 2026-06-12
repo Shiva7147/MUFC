@@ -310,6 +310,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .nav-link:hover { color: var(--white); background: var(--white-05); }
 .nav-link.active { color: var(--red); }
+.mobile-only-link { display: none !important; }
 
 .hamburger {
   display: none;
@@ -1545,6 +1546,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .primary-link:hover { border-color: rgba(193,0,0,0.5); background: rgba(193,0,0,0.2); }
 
+.primary-link-whatsapp {
+  background: linear-gradient(135deg, rgba(37,211,102,0.12), rgba(18,140,116,0.18));
+  border-color: rgba(37,211,102,0.25);
+  grid-column: span 2;
+}
+.primary-link-whatsapp:hover {
+  background: linear-gradient(135deg, rgba(37,211,102,0.18), rgba(18,140,116,0.25)) !important;
+  border-color: rgba(37,211,102,0.4) !important;
+}
+
 .instagram-link:hover { border-color: rgba(225,48,108,0.3); background: rgba(225,48,108,0.05); }
 .whatsapp-link:hover { border-color: rgba(37,211,102,0.3); background: rgba(37,211,102,0.04); }
 
@@ -1800,6 +1811,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (max-width: 1024px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
+  .mobile-only-link { display: block !important; width: 100%; }
 
   .nav-links.mobile-open {
     display: flex;
