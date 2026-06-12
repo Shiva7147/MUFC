@@ -86,15 +86,17 @@ module.exports = async (req, res) => {
     else if (fileName.toLowerCase().endsWith('.webp')) fileType = 'image/webp';
     else if (fileName.toLowerCase().endsWith('.gif')) fileType = 'image/gif';
 
-    const presignedRes = await makeRequest('https://api.uploadthing.com/v6/uploadFiles', {
+    const presignedRes = await makeRequest('https://api.uploadthing.com/v7/prepareUpload', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-uploadthing-api-key': UPLOADTHING_SECRET,
-        'x-uploadthing-version': '6.4.0'
+        'x-uploadthing-version': '7.7.4'
       }
     }, JSON.stringify({
-      files: [{ name: fileName, size: fileSize, type: fileType }],
+      fileName: fileName,
+      fileSize: fileSize,
+      fileType: fileType,
       acl: 'public-read'
     }));
 
@@ -105,22 +107,21 @@ module.exports = async (req, res) => {
     }
 
     const responseData = JSON.parse(presignedRes.data);
-    const { presignedUrl, fields, fileUrl } = responseData[0];
+    const { url: uploadUrl } = responseData;
 
     const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
-    const payload = [];
+    const parts = [
+      `--${boundary}\r\n`,
+      `Content-Disposition: form-data; name="file"; filename="${fileName}"\r\n`,
+      `Content-Type: ${fileType}\r\n\r\n`
+    ];
 
-    for (const [key, value] of Object.entries(fields)) {
-      payload.push(`--${boundary}\r\nContent-Disposition: form-data; name="${key}"\r\n\r\n${value}\r\n`);
-    }
-    payload.push(`--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${fileName}"\r\nContent-Type: ${fileType}\r\n\r\n`);
+    const part1Buf = Buffer.from(parts.join(''), 'utf-8');
+    const part2Buf = Buffer.from(`\r\n--${boundary}--\r\n`, 'utf-8');
+    const bodyBuffer = Buffer.concat([part1Buf, fileBuffer, part2Buf]);
 
-    const textPart1 = Buffer.concat(payload.map(str => Buffer.from(str, 'utf-8')));
-    const textPart2 = Buffer.from(`\r\n--${boundary}--\r\n`, 'utf-8');
-    const bodyBuffer = Buffer.concat([textPart1, fileBuffer, textPart2]);
-
-    const s3Res = await makeRequest(presignedUrl, {
-      method: 'POST',
+    const s3Res = await makeRequest(uploadUrl, {
+      method: 'PUT',
       headers: {
         'Content-Type': `multipart/form-data; boundary=${boundary}`,
         'Content-Length': bodyBuffer.length
@@ -128,8 +129,9 @@ module.exports = async (req, res) => {
     }, bodyBuffer);
 
     if (s3Res.statusCode >= 200 && s3Res.statusCode < 300) {
+      const uploadResult = JSON.parse(s3Res.data);
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ success: true, url: fileUrl }));
+      res.end(JSON.stringify({ success: true, url: uploadResult.url }));
     } else {
       res.writeHead(502, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ success: false, error: 'S3 upload failed', details: s3Res.data }));

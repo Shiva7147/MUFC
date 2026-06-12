@@ -135,15 +135,17 @@ const server = http.createServer((req, res) => {
             });
           };
 
-          const presigned = await makeUTRequest('https://api.uploadthing.com/v6/uploadFiles', {
+          const presigned = await makeUTRequest('https://api.uploadthing.com/v7/prepareUpload', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'x-uploadthing-api-key': UPLOADTHING_SECRET,
-              'x-uploadthing-version': '6.4.0'
+              'x-uploadthing-version': '7.7.4'
             }
           }, JSON.stringify({
-            files: [{ name: fileName, size: fileSize, type: fileType }],
+            fileName: fileName,
+            fileSize: fileSize,
+            fileType: fileType,
             acl: 'public-read'
           }));
 
@@ -153,22 +155,21 @@ const server = http.createServer((req, res) => {
             return;
           }
 
-          const parsedUT = JSON.parse(presigned.data)[0];
-          const { presignedUrl, fields, fileUrl } = parsedUT;
+          const { url: uploadUrl } = JSON.parse(presigned.data);
 
           const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
-          const parts = [];
-          for (const [k, v] of Object.entries(fields)) {
-            parts.push(`--${boundary}\r\nContent-Disposition: form-data; name="${k}"\r\n\r\n${v}\r\n`);
-          }
-          parts.push(`--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${fileName}"\r\nContent-Type: ${fileType}\r\n\r\n`);
+          const parts = [
+            `--${boundary}\r\n`,
+            `Content-Disposition: form-data; name="file"; filename="${fileName}"\r\n`,
+            `Content-Type: ${fileType}\r\n\r\n`
+          ];
 
-          const t1 = Buffer.concat(parts.map(s => Buffer.from(s, 'utf-8')));
+          const t1 = Buffer.from(parts.join(''), 'utf-8');
           const t2 = Buffer.from(`\r\n--${boundary}--\r\n`, 'utf-8');
           const utBuffer = Buffer.concat([t1, fileBuffer, t2]);
 
-          const s3Result = await makeUTRequest(presignedUrl, {
-            method: 'POST',
+          const s3Result = await makeUTRequest(uploadUrl, {
+            method: 'PUT',
             headers: {
               'Content-Type': `multipart/form-data; boundary=${boundary}`,
               'Content-Length': utBuffer.length
@@ -176,8 +177,9 @@ const server = http.createServer((req, res) => {
           }, utBuffer);
 
           if (s3Result.statusCode >= 200 && s3Result.statusCode < 300) {
+            const uploadResult = JSON.parse(s3Result.data);
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, url: fileUrl }));
+            res.end(JSON.stringify({ success: true, url: uploadResult.url }));
           } else {
             res.writeHead(502, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: false, error: 'S3 failed', details: s3Result.data }));
