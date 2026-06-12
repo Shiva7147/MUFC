@@ -66,9 +66,7 @@ function initActiveNavLinks() {
     'football': 'football',
     'gallery': 'gallery',
     'announcements': 'announcements',
-    'chants': 'chants',
-    'team': 'team'
-  };
+      };
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -407,8 +405,7 @@ let siteData = {
     { id: 3, imageUrl: "images/screening2.jpg", title: "Match Screening", type: "standard" },
     { id: 4, imageUrl: "images/football_team.jpg", title: "MUSCB FC", type: "wide" }
   ],
-  team: [],
-  chants: []
+
 };
 
 let verifiedPassword = '';
@@ -440,8 +437,7 @@ async function initDynamicData() {
       { id: 3, imageUrl: "images/screening2.jpg", title: "Match Screening", type: "standard" },
       { id: 4, imageUrl: "images/football_team.jpg", title: "MUSCB FC", type: "wide" }
     ],
-    team: [],
-    chants: []
+
   };
 
   function validateData(data) {
@@ -514,8 +510,7 @@ function renderAllContent() {
   renderScreenings(siteData.screenings);
   renderAnnouncements(siteData.announcements);
   renderGallery(siteData.gallery);
-  renderChants(siteData.chants);
-  renderTeam(siteData.team);
+
   renderHomePreviews();
 }
 
@@ -665,93 +660,6 @@ function renderGallery(gallery) {
 }
 
 // ─── CHANTS RENDERING ───────────────────────────
-function renderChants(chants) {
-  const container = document.getElementById('chants-dynamic-container');
-  if (!container) return;
-
-  if (!chants || !Array.isArray(chants)) {
-    container.innerHTML = '<p class="error-msg">Chants currently unavailable.</p>';
-    return;
-  }
-
-  container.innerHTML = chants.map(chant => {
-    const lines = chant.lyrics.split('\n');
-    const firstLine = lines[0] || '';
-    const formattedLyrics = chant.lyrics.replace(/\n/g, '<br>');
-
-    return `
-      <div class="chant-card" id="chant-card-${chant.id}">
-        <div class="chant-header">
-          <div class="chant-info">
-            <div class="chant-music-icon">🎵</div>
-            <h3>${chant.title}</h3>
-          </div>
-          <button class="chant-play-btn" onclick="toggleChant(${chant.id})" aria-label="Play mock chant audio">
-            <span class="play-icon">▶</span>
-            <span class="pause-icon" style="display:none;">⏸</span>
-          </button>
-        </div>
-        <div class="chant-visualizer" style="display:none;">
-          <div class="visualizer-bar"></div>
-          <div class="visualizer-bar"></div>
-          <div class="visualizer-bar"></div>
-          <div class="visualizer-bar"></div>
-          <div class="visualizer-bar"></div>
-          <div class="visualizer-bar"></div>
-        </div>
-        <div class="chant-lyrics-preview">
-          "${firstLine}..."
-        </div>
-        <div class="chant-lyrics" style="display:none;">
-          ${formattedLyrics}
-        </div>
-        <button class="chant-expand-btn" onclick="toggleLyrics(${chant.id})">Show Lyrics</button>
-      </div>
-    `;
-  }).join('');
-}
-
-// ─── TEAM RENDERING ─────────────────────────────
-function renderTeam(team) {
-  const container = document.getElementById('team-dynamic-container');
-  if (!container) return;
-
-  if (!team || !Array.isArray(team)) {
-    container.innerHTML = '<p class="error-msg">Core Team members currently unavailable.</p>';
-    return;
-  }
-
-  container.innerHTML = team.map(member => {
-    const initials = member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-    const imageHtml = member.imageUrl 
-      ? `<img src="${member.imageUrl}" alt="${member.name}" class="team-avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />`
-      : '';
-
-    return `
-      <div class="team-card" data-animate="fade-up">
-        <div class="team-avatar-wrapper">
-          <div class="team-avatar">
-            ${imageHtml}
-            <div class="team-avatar-placeholder" style="${member.imageUrl ? 'display: none;' : 'display: flex;'}">
-              <span>${initials}</span>
-            </div>
-          </div>
-        </div>
-        <div class="team-info">
-          <h3>${member.name}</h3>
-          <p class="team-role">${member.designation}</p>
-          <div class="team-social">
-            <a href="https://www.instagram.com/muscbengaluru" target="_blank" rel="noopener" class="team-social-link">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ─── HOME PAGE PREVIEWS & LOGO COUNT ────────────
 function updateHeroMembersCount(countText) {
   const el = document.getElementById('hero-members-count');
   if (!el) return;
@@ -831,56 +739,6 @@ function renderHomePreviews() {
   updateHeroMembersCount(siteData.membersCount);
 }
 
-// ─── CHANTS MOCK AUDIO PLAYER INTERACTIVE ACTIONS ───
-window.toggleChant = function(id) {
-  const card = document.getElementById(`chant-card-${id}`);
-  if (!card) return;
-
-  const isPlaying = card.classList.contains('playing');
-
-  // Stop all other playing chants
-  document.querySelectorAll('.chant-card').forEach(c => {
-    c.classList.remove('playing');
-    const playBtn = c.querySelector('.play-icon');
-    const pauseBtn = c.querySelector('.pause-icon');
-    const visualizer = c.querySelector('.chant-visualizer');
-    if (playBtn) playBtn.style.display = 'inline';
-    if (pauseBtn) pauseBtn.style.display = 'none';
-    if (visualizer) visualizer.style.display = 'none';
-  });
-
-  if (!isPlaying) {
-    card.classList.add('playing');
-    const playBtn = card.querySelector('.play-icon');
-    const pauseBtn = card.querySelector('.pause-icon');
-    const visualizer = card.querySelector('.chant-visualizer');
-    if (playBtn) playBtn.style.display = 'none';
-    if (pauseBtn) pauseBtn.style.display = 'inline';
-    if (visualizer) visualizer.style.display = 'flex';
-  }
-};
-
-window.toggleLyrics = function(id) {
-  const card = document.getElementById(`chant-card-${id}`);
-  if (!card) return;
-
-  const lyrics = card.querySelector('.chant-lyrics');
-  const preview = card.querySelector('.chant-lyrics-preview');
-  const btn = card.querySelector('.chant-expand-btn');
-
-  if (lyrics.style.display === 'none') {
-    lyrics.style.display = 'block';
-    preview.style.display = 'none';
-    btn.textContent = 'Hide Lyrics';
-    card.classList.add('expanded');
-  } else {
-    lyrics.style.display = 'none';
-    preview.style.display = 'block';
-    btn.textContent = 'Show Lyrics';
-    card.classList.remove('expanded');
-  }
-};
-
 // ─── TABS SYSTEM (SPA) ──────────────────────────
 const tabMap = {
   'home': 'home',
@@ -898,8 +756,6 @@ const tabMap = {
   'football': 'football',
   'gallery': 'gallery',
   'announcements': 'announcements',
-  'chants': 'chants',
-  'team': 'team'
 };
 
 function switchTab(tabId) {
@@ -1197,55 +1053,7 @@ function initAdminDashboard() {
     });
   }
 
-  // Team picture uploader
-  bindImageUpload('team-file-input', 'team-upload-status', 'team-member-url', 'team-poster-preview');
 
-  // Team Form Submit
-  const teamForm = document.getElementById('admin-team-form');
-  if (teamForm) {
-    teamForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const newMember = {
-        id: Date.now(),
-        name: document.getElementById('team-member-name').value,
-        designation: document.getElementById('team-member-role').value,
-        imageUrl: document.getElementById('team-member-url').value || ''
-      };
-      if (!siteData.team) siteData.team = [];
-      siteData.team.push(newMember);
-      saveData();
-      teamForm.reset();
-
-      // Reset preview
-      const preview = document.getElementById('team-poster-preview');
-      if (preview) preview.innerHTML = 'No Photo Selected';
-      const statusEl = document.getElementById('team-upload-status');
-      if (statusEl) {
-        statusEl.textContent = 'Select a photo or leave blank to use initials.';
-        statusEl.style.color = 'var(--white-50)';
-      }
-
-      populateTeamList();
-    });
-  }
-
-  // Chants Form Submit
-  const chantsForm = document.getElementById('admin-chants-form');
-  if (chantsForm) {
-    chantsForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const newChant = {
-        id: Date.now(),
-        title: document.getElementById('chant-title').value,
-        lyrics: document.getElementById('chant-lyrics').value
-      };
-      if (!siteData.chants) siteData.chants = [];
-      siteData.chants.push(newChant);
-      saveData();
-      chantsForm.reset();
-      populateChantsList();
-    });
-  }
 }
 
 // Populate Dash fields
@@ -1272,8 +1080,7 @@ function populateDashboard() {
 
   populateAnnouncementsList();
   populateGalleryList();
-  populateTeamList();
-  populateChantsList();
+
 }
 
 // Image Upload Helper
@@ -1398,53 +1205,6 @@ window.deleteGalleryImage = function(id) {
 };
 
 // Team Admin List
-function populateTeamList() {
-  const container = document.getElementById('admin-team-list');
-  if (!container) return;
-
-  if (!siteData.team) siteData.team = [];
-
-  container.innerHTML = siteData.team.map(member => `
-    <div class="admin-list-item">
-      <div class="admin-item-info">
-        <span class="admin-item-title">${member.name}</span>
-        <span class="admin-item-subtitle">${member.designation}</span>
-      </div>
-      <button class="btn-delete" onclick="deleteTeamMember(${member.id})" title="Delete Member">&times;</button>
-    </div>
-  `).join('');
-}
-
-// Chants Admin List
-function populateChantsList() {
-  const container = document.getElementById('admin-chants-list');
-  if (!container) return;
-
-  if (!siteData.chants) siteData.chants = [];
-
-  container.innerHTML = siteData.chants.map(chant => `
-    <div class="admin-list-item">
-      <div class="admin-item-info">
-        <span class="admin-item-title">${chant.title}</span>
-      </div>
-      <button class="btn-delete" onclick="deleteChant(${chant.id})" title="Delete Chant">&times;</button>
-    </div>
-  `).join('');
-}
-
-window.deleteTeamMember = function(id) {
-  siteData.team = siteData.team.filter(member => member.id !== id);
-  saveData();
-  populateTeamList();
-};
-
-window.deleteChant = function(id) {
-  siteData.chants = siteData.chants.filter(chant => chant.id !== id);
-  saveData();
-  populateChantsList();
-};
-
-// Save Data Call
 async function saveData() {
   const statusMsg = document.getElementById('admin-status-message');
   if (statusMsg) {

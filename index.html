@@ -27,8 +27,8 @@
  <img src="https://res.cloudinary.com/drdcn2pqa/image/upload/v1781283089/profile_muscb_jmql2f.jpg" alt="MUSCB Logo" class="nav-logo-img" width="36" height="36" />
  </div>
  <div class="nav-brand-text">
- <span class="nav-brand-primary">MUSCB</span>
- <span class="nav-brand-sub">Bengaluru's Red Devils</span>
+ <span class="nav-brand-primary" style="font-size: 14px; font-weight: 800; letter-spacing: 0.5px; white-space: nowrap;">Manchester United Supporters Club</span>
+ <span class="nav-brand-sub">Bengaluru / MUSCB</span>
  </div>
  </a>
  
@@ -41,8 +41,6 @@
     <li><a href="#football" class="nav-link tab-trigger" data-target="football">Match Day</a></li>
     <li><a href="#gallery" class="nav-link tab-trigger" data-target="gallery">Gallery</a></li>
     <li><a href="#announcements" class="nav-link tab-trigger" data-target="announcements">Announcement</a></li>
-    <li><a href="#chants" class="nav-link tab-trigger" data-target="chants">Chants</a></li>
-    <li><a href="#team" class="nav-link tab-trigger" data-target="team">Core Team</a></li>
     <li class="mobile-only-link"><a href="#contact" class="nav-link modal-trigger-link">Have Questions?</a></li>
     <li class="mobile-only-link"><a href="#admin-login-modal" class="nav-link" id="hamburger-admin-btn">Admin Portal</a></li>
     <li>
@@ -89,9 +87,9 @@
       <div class="emblem-ring outer">
         <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; inset: 0;">
           <path id="outerRingPath" d="M 70, 70 m -58, 0 a 58,58 0 1,1 116,0 a 58,58 0 1,1 -116,0" fill="none" />
-          <text fill="#F4C430" font-family="Inter, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.8">
+          <text fill="#F4C430" font-family="Inter, sans-serif" font-size="6.5" font-weight="800" letter-spacing="1.2">
             <textPath href="#outerRingPath" startOffset="0%">
-              MUSC BENGALURU • BENGALURU IS RED • GGMU • ONE UNITED •
+              BENGALURU IS RED • BENGALURU IS RED • BENGALURU IS RED • BENGALURU IS RED •
             </textPath>
           </text>
         </svg>
@@ -829,36 +827,7 @@
  </div>
  </section>
   </div>
-  <!-- SPA VIEW: CHANTS -->
-  <div id="view-chants" class="tab-view">
-    <section class="section chants-section" id="chants">
-      <div class="chants-bg"></div>
-      <div class="container animate-on-tab-active">
-        <div class="section-label light">Matchday Atmosphere</div>
-        <h2 class="section-title light">MUSCB <span class="text-red">Chants</span></h2>
-        <p class="section-subtitle light">Sing your heart out with the Red Army. Learn the official chants and lyrics sung live during screenings and turf matches in Bengaluru.</p>
-        
-        <div class="chants-grid" id="chants-dynamic-container">
-          <!-- Rendered Dynamically from data.json -->
-        </div>
-      </div>
-    </section>
-  </div>
-  <!-- SPA VIEW: CORE TEAM -->
-  <div id="view-team" class="tab-view">
-    <section class="section team-section" id="team">
-      <div class="team-bg"></div>
-      <div class="container animate-on-tab-active">
-        <div class="section-label">Core Committee</div>
-        <h2 class="section-title">Meet the <span class="text-red">Core Team</span></h2>
-        <p class="section-subtitle">The passionate volunteers behind Manchester United Supporters Club Bengaluru. Leading match screenings, football games, and community events.</p>
-        
-        <div class="team-grid" id="team-dynamic-container">
-          <!-- Rendered Dynamically from data.json -->
-        </div>
-      </div>
-    </section>
-  </div><footer class="footer" id="footer">
+  <footer class="footer" id="footer">
  <div class="footer-bg"></div>
  <div class="container">
  <div class="footer-top">
@@ -882,8 +851,8 @@
  <ul>
  <li><a href="https://tickets.manutd.com/memberships" target="_blank" rel="noopener" id="footer-oum-btn">Buy OUM</a></li>
  <li><a href="https://forms.gle/d9csbnU3xJFCGDcD7" target="_blank" rel="noopener" id="footer-form-btn">MUSCB Form</a></li>
- <li><a href="#benefits" id="footer-benefits-link">OUM Benefits</a></li>
- <li><a href="#membership" id="footer-membership-link">How It Works</a></li>
+ 
+ 
  </ul>
  </div>
  <div class="footer-links-column">
@@ -1157,62 +1126,7 @@
           </div>
           
           <!-- Core Team Tab -->
-          <div class="tab-pane" id="tab-team">
-            <div class="tab-split">
-              <div class="team-list-wrapper">
-                <h3>Current Core Team</h3>
-                <div id="admin-team-list" class="admin-items-list">
-                  <!-- Rendered dynamically -->
-                </div>
-              </div>
-              <form id="admin-team-form" class="admin-form">
-                <h3>Add New Team Member</h3>
-                
-                <div class="form-group">
-                  <label for="team-member-name">Member Name</label>
-                  <input type="text" id="team-member-name" placeholder="e.g. Shiva" required />
-                </div>
-                
-                <div class="form-group" style="margin-top: 12px;">
-                  <label for="team-member-role">Designation / Role</label>
-                  <input type="text" id="team-member-role" placeholder="e.g. President & Founder" required />
-                </div>
-
-                <div class="form-group" style="margin-top: 12px;">
-                  <label>Profile Picture (Direct Upload)</label>
-                  <input type="file" id="team-file-input" accept="image/*" />
-                  <span class="upload-help" id="team-upload-status">Select a photo or leave blank to use initials.</span>
-                  <input type="hidden" id="team-member-url" />
-                  <div id="team-poster-preview" class="image-preview-thumbnail">No Photo Selected</div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Save Team Member</button>
-              </form>
-            </div>
-          </div>
-
-          <!-- Chants Tab -->
-          <div class="tab-pane" id="tab-chants">
-            <div class="tab-split">
-              <div class="chants-list-wrapper">
-                <h3>Current Fan Chants</h3>
-                <div id="admin-chants-list" class="admin-items-list">
-                  <!-- Rendered dynamically -->
-                </div>
-              </div>
-              <form id="admin-chants-form" class="admin-form">
-                <h3>Add New Chant</h3>
-                <div class="form-group">
-                  <label for="chant-title">Chant Title</label>
-                  <input type="text" id="chant-title" placeholder="e.g. Glory Glory Man United" required />
-                </div>
-                <div class="form-group" style="margin-top: 12px;">
-                  <label for="chant-lyrics">Lyrics</label>
-                  <textarea id="chant-lyrics" rows="5" placeholder="Write chant lyrics here..." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Add Chant</button>
-              </form>
-            </div>
+          
           </div>
         </div>
 

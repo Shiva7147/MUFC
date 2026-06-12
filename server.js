@@ -95,43 +95,96 @@ const server = http.createServer((req, res) => {
     if (req.method === 'POST') {
       let body = '';
       req.on('data', chunk => { body += chunk; });
-      req.on('end', () => {
+      req.on('end', async () => {
         try {
           const payload = JSON.parse(body);
-          
           if (payload.password !== 'reddevils2026') {
             res.writeHead(401, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: false, error: 'Unauthorized' }));
             return;
           }
-
           const { fileName, fileData } = payload;
           if (!fileName || !fileData) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: false, error: 'Missing fileName or fileData' }));
             return;
           }
+          
+          // Call UploadThing S3 API
+          const fileBuffer = Buffer.from(fileData, 'base64');
+          const fileSize = fileBuffer.length;
+          let fileType = 'image/jpeg';
+          if (fileName.toLowerCase().endsWith('.png')) fileType = 'image/png';
+          else if (fileName.toLowerCase().endsWith('.webp')) fileType = 'image/webp';
+          
+          const UPLOADTHING_TOKEN = 'eyJhcGlLZXkiOiJza19saXZlXzI1ZDIwZmVkMTczZGJiMGEyYWY1NGNmMDVkZWFlOGJlMmFiMWRhMzMzZWQzMzczZTYxZWUyMDE1MGU3NjNmODIiLCJhcHBJZCI6ImJkNDAyZGtoaDEiLCJyZWdpb25zIjpbInNlYTEiXX0=';
+          const parsedToken = JSON.parse(Buffer.from(UPLOADTHING_TOKEN, 'base64').toString('utf8'));
+          const UPLOADTHING_SECRET = parsedToken.apiKey;
+          
+          const https = require('https');
+          const makeUTRequest = (url, opts, pData) => {
+            return new Promise((resolve, reject) => {
+              const r = https.request(url, opts, (rs) => {
+                let d = '';
+                rs.on('data', c => { d += c; });
+                rs.on('end', () => resolve({ statusCode: rs.statusCode, data: d }));
+              });
+              r.on('error', e => reject(e));
+              if (pData) r.write(pData);
+              r.end();
+            });
+          };
 
-          const cleanFileName = Date.now() + '-' + fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
-          const localImagesDir = path.join(ROOT, 'images');
-          if (!fs.existsSync(localImagesDir)) {
-            fs.mkdirSync(localImagesDir, { recursive: true });
+          const presigned = await makeUTRequest('https://api.uploadthing.com/v6/uploadFiles', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-uploadthing-api-key': UPLOADTHING_SECRET,
+              'x-uploadthing-version': '6.4.0'
+            }
+          }, JSON.stringify({
+            files: [{ name: fileName, size: fileSize, type: fileType }],
+            acl: 'public-read'
+          }));
+
+          if (presigned.statusCode !== 200) {
+            res.writeHead(502, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: 'UploadThing failed', details: presigned.data }));
+            return;
           }
 
-          const localFilePath = path.join(localImagesDir, cleanFileName);
-          const buffer = Buffer.from(fileData, 'base64');
-          fs.writeFile(localFilePath, buffer, (err) => {
-            if (err) {
-              res.writeHead(500, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify({ success: false, error: 'Failed to write local image' }));
-              return;
+          const parsedUT = JSON.parse(presigned.data)[0];
+          const { presignedUrl, fields, fileUrl } = parsedUT;
+
+          const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
+          const parts = [];
+          for (const [k, v] of Object.entries(fields)) {
+            parts.push(`--${boundary}\r\nContent-Disposition: form-data; name="${k}"\r\n\r\n${v}\r\n`);
+          }
+          parts.push(`--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${fileName}"\r\nContent-Type: ${fileType}\r\n\r\n`);
+
+          const t1 = Buffer.concat(parts.map(s => Buffer.from(s, 'utf-8')));
+          const t2 = Buffer.from(`\r\n--${boundary}--\r\n`, 'utf-8');
+          const utBuffer = Buffer.concat([t1, fileBuffer, t2]);
+
+          const s3Result = await makeUTRequest(presignedUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': `multipart/form-data; boundary=${boundary}`,
+              'Content-Length': utBuffer.length
             }
+          }, utBuffer);
+
+          if (s3Result.statusCode >= 200 && s3Result.statusCode < 300) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, url: 'images/' + cleanFileName }));
-          });
-        } catch (e) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: false, error: 'Invalid JSON payload' }));
+            res.end(JSON.stringify({ success: true, url: fileUrl }));
+          } else {
+            res.writeHead(502, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: 'S3 failed', details: s3Result.data }));
+          }
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: err.message }));
         }
       });
       return;

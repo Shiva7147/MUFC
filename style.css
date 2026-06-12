@@ -279,7 +279,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   gap: 12px;
   flex-shrink: 0;
 }
-.nav-logo svg, .nav-logo-img { flex-shrink: 0; filter: drop-shadow(0 2px 8px var(--red-glow)); }
+.nav-logo svg, .nav-logo-img {
+  width: 48px !important;
+  height: 48px !important;
+  transition: transform var(--transition-base);
+
+  width: 48px !important;
+  height: 48px !important;
+  transition: transform var(--transition-base);
+
+  width: 48px !important;
+  height: 48px !important;
+  transition: transform var(--transition-base);
+ flex-shrink: 0; filter: drop-shadow(0 2px 8px var(--red-glow)); }
 .nav-logo-img {
   width: 36px;
   height: 36px;
@@ -2960,4 +2972,40 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     width: 100% !important;
     min-width: unset !important;
   }
+}
+
+.emblem-ring.inner {
+  overflow: hidden !important;
+  border: 2px solid var(--red) !important;
+}
+.emblem-ring.inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.45);
+  z-index: 1;
+}
+
+.emblem-ring.inner {
+  overflow: hidden !important;
+  border: 2px solid var(--red) !important;
+}
+.emblem-ring.inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.45);
+  z-index: 1;
+}
+
+.emblem-ring.inner {
+  overflow: hidden !important;
+  border: 2px solid var(--red) !important;
+}
+.emblem-ring.inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.45);
+  z-index: 1;
 }
