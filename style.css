@@ -2126,14 +2126,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Mobile Hero Brightness Overrides */
 @media (max-width: 640px) {
   .hero-bg-img {
-    filter: saturate(1.2) brightness(0.60) !important;
+    filter: saturate(1.2) brightness(0.75) !important;
   }
   .hero-overlay {
     background: linear-gradient(
       175deg,
-      rgba(100, 0, 0, 0.55) 0%,
-      rgba(10, 10, 10, 0.45) 45%,
-      rgba(10, 10, 10, 0.82) 100%
+      rgba(60, 0, 0, 0.45) 0%,
+      rgba(10, 10, 10, 0.30) 45%,
+      rgba(10, 10, 10, 0.65) 100%
     ) !important;
   }
   
@@ -2529,3 +2529,358 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: var(--black-2);
 }
 
+
+
+/* ════════════════════════════════════════════════
+   SPA TAB VIEW SYSTEM & NEW CUSTOM PAGES (CHANTS, TEAM)
+   ════════════════════════════════════════════════ */
+
+/* ─── SPA TAB VIEW SYSTEM ────────────────────────── */
+.tab-view {
+  display: none;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.tab-view.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeInTab 0.5s forwards;
+}
+@keyframes fadeInTab {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── HERO EMBLEM SCALING & WRAPPER ───────────────── */
+.emblem-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.emblem-ring.outer svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+.emblem-ring.inner {
+  position: absolute;
+  z-index: 2;
+}
+
+/* ─── CHANTS SECTION ──────────────────────────────── */
+.chants-section {
+  position: relative;
+  padding: var(--section-pad) 0;
+  background: radial-gradient(circle at 10% 10%, rgba(193, 0, 0, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 90% 90%, rgba(193, 0, 0, 0.02) 0%, transparent 50%);
+}
+.chants-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--black) 0%, rgba(15, 15, 15, 0.95) 100%);
+  z-index: -1;
+}
+.chants-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+.chant-card {
+  background: var(--black-card);
+  border: 1px solid var(--white-10);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.chant-card:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(193, 0, 0, 0.15);
+}
+.chant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.chant-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.chant-music-icon {
+  background: rgba(193, 0, 0, 0.1);
+  color: var(--red);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 1px solid rgba(193, 0, 0, 0.2);
+}
+.chant-info h3 {
+  font-family: var(--font-condensed);
+  font-size: clamp(20px, 4vw, 24px);
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.chant-play-btn {
+  background: transparent;
+  border: 2px solid var(--white-20);
+  color: var(--white);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all var(--transition-fast);
+}
+.chant-play-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  transform: scale(1.05);
+}
+.chant-visualizer {
+  display: none;
+  align-items: flex-end;
+  gap: 4px;
+  height: 32px;
+  margin: 20px 0;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  width: fit-content;
+}
+.visualizer-bar {
+  width: 4px;
+  height: 4px;
+  background: var(--red);
+  border-radius: 2px;
+}
+.chant-card.playing .visualizer-bar {
+  animation: equalize 0.8s ease-in-out infinite alternate;
+}
+.chant-card.playing .visualizer-bar:nth-child(1) { animation-delay: 0.1s; }
+.chant-card.playing .visualizer-bar:nth-child(2) { animation-delay: 0.35s; }
+.chant-card.playing .visualizer-bar:nth-child(3) { animation-delay: 0.55s; }
+.chant-card.playing .visualizer-bar:nth-child(4) { animation-delay: 0.2s; }
+.chant-card.playing .visualizer-bar:nth-child(5) { animation-delay: 0.45s; }
+.chant-card.playing .visualizer-bar:nth-child(6) { animation-delay: 0.65s; }
+
+@keyframes equalize {
+  0% { height: 4px; }
+  100% { height: 24px; }
+}
+
+.chant-lyrics-preview {
+  color: var(--white-50);
+  font-style: italic;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.chant-lyrics {
+  color: var(--white-90);
+  line-height: 1.6;
+  font-size: 15px;
+  margin-bottom: 20px;
+  padding: 16px;
+  border-left: 3px solid var(--red);
+  background: rgba(193, 0, 0, 0.04);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chant-expand-btn {
+  background: transparent;
+  border: none;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: color var(--transition-fast);
+  padding: 5px 0;
+  display: inline-block;
+}
+.chant-expand-btn:hover {
+  color: var(--white);
+}
+
+/* ─── CORE TEAM SECTION ───────────────────────────── */
+.team-section {
+  position: relative;
+  padding: var(--section-pad) 0;
+  background: radial-gradient(circle at 90% 10%, rgba(193, 0, 0, 0.04) 0%, transparent 50%),
+              radial-gradient(circle at 10% 90%, rgba(193, 0, 0, 0.04) 0%, transparent 50%);
+}
+.team-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--black) 0%, rgba(15, 15, 15, 0.98) 100%);
+  z-index: -1;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+  margin-top: 50px;
+}
+.team-card {
+  background: var(--black-card);
+  border: 1px solid var(--white-10);
+  border-radius: var(--radius-lg);
+  padding: 30px 20px;
+  text-align: center;
+  transition: all var(--transition-base);
+}
+.team-card:hover {
+  border-color: var(--red);
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(193, 0, 0, 0.2);
+}
+.team-avatar-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--red) 0%, var(--gold) 100%);
+  box-shadow: 0 8px 20px rgba(193, 0, 0, 0.15);
+}
+.team-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--black-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.team-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  z-index: 1;
+}
+.team-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 32px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #1f1f1f 0%, #0c0c0c 100%);
+  position: absolute;
+  inset: 0;
+}
+.team-info h3 {
+  font-family: var(--font-condensed);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--white);
+  text-transform: uppercase;
+}
+.team-role {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.team-social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.team-social-link {
+  color: var(--white-50);
+  background: rgba(255, 255, 255, 0.05);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+.team-social-link:hover {
+  color: var(--red);
+  background: rgba(193, 0, 0, 0.15);
+  transform: scale(1.1);
+}
+
+/* ─── RESPONSIVE OVERRIDES FOR TABS ───────────────── */
+@media (max-width: 1140px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .chants-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+@media (max-width: 640px) {
+  .emblem-wrapper {
+    width: 96px;
+    height: 96px;
+  }
+  .emblem-ring.outer {
+    width: 96px;
+    height: 96px;
+  }
+  .emblem-ring.inner {
+    width: 68px;
+    height: 68px;
+  }
+}
+@media (max-width: 480px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   safeInit('DynamicData', initDynamicData);
   safeInit('Modals', initModals);
   safeInit('AdminDashboard', initAdminDashboard);
+  safeInit('Tabs', initTabs);
 });
 
 // ─── NAVBAR ─────────────────────────────────────
@@ -50,17 +51,37 @@ function initNavbar() {
 function initActiveNavLinks() {
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
+  const tabMap = {
+    'hero': 'home',
+    'about': 'home',
+    'home-screenings': 'home',
+    'community': 'home',
+    'home-gallery': 'home',
+    'home-chants': 'home',
+    'membership': 'membership',
+    'benefits': 'membership',
+    'screenings': 'screenings',
+    'meetups': 'meetups',
+    'football': 'football',
+    'gallery': 'gallery',
+    'announcements': 'announcements',
+    'chants': 'chants',
+    'team': 'team'
+  };
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id;
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${id}`) {
-            link.classList.add('active');
-          }
-        });
+        const tabId = tabMap[id];
+        if (tabId) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-target') === tabId) {
+              link.classList.add('active');
+            }
+          });
+        }
       }
     });
   }, {
@@ -348,6 +369,7 @@ console.log(
 // ════════════════════════════════════════════════
 
 let siteData = {
+  membersCount: "200+ Members Strong",
   screenings: {
     featured: {
       competition: "Premier League",
@@ -370,7 +392,9 @@ let siteData = {
     { id: 2, imageUrl: "images/gallery1.jpg", title: "Match Celebration", type: "standard" },
     { id: 3, imageUrl: "images/screening2.jpg", title: "Match Screening", type: "standard" },
     { id: 4, imageUrl: "images/football_team.jpg", title: "MUSCB FC", type: "wide" }
-  ]
+  ],
+  team: [],
+  chants: []
 };
 
 let verifiedPassword = '';
@@ -378,6 +402,7 @@ let verifiedPassword = '';
 // ─── DYNAMIC DATA LOADING ───────────────────────
 async function initDynamicData() {
   const defaults = {
+    membersCount: "200+ Members Strong",
     screenings: {
       featured: {
         competition: "Premier League",
@@ -400,7 +425,9 @@ async function initDynamicData() {
       { id: 2, imageUrl: "images/gallery1.jpg", title: "Match Celebration", type: "standard" },
       { id: 3, imageUrl: "images/screening2.jpg", title: "Match Screening", type: "standard" },
       { id: 4, imageUrl: "images/football_team.jpg", title: "MUSCB FC", type: "wide" }
-    ]
+    ],
+    team: [],
+    chants: []
   };
 
   function validateData(data) {
@@ -410,7 +437,11 @@ async function initDynamicData() {
            data.announcements && 
            Array.isArray(data.announcements) && 
            data.gallery && 
-           Array.isArray(data.gallery);
+           Array.isArray(data.gallery) &&
+           data.team &&
+           Array.isArray(data.team) &&
+           data.chants &&
+           Array.isArray(data.chants);
   }
 
   // Try loading from localStorage first to keep it instant
@@ -469,6 +500,9 @@ function renderAllContent() {
   renderScreenings(siteData.screenings);
   renderAnnouncements(siteData.announcements);
   renderGallery(siteData.gallery);
+  renderChants(siteData.chants);
+  renderTeam(siteData.team);
+  renderHomePreviews();
 }
 
 // ─── RENDERING FUNCTIONS ────────────────────────
@@ -614,6 +648,320 @@ function renderGallery(gallery) {
       </div>
     `;
   }).join('');
+}
+
+// ─── CHANTS RENDERING ───────────────────────────
+function renderChants(chants) {
+  const container = document.getElementById('chants-dynamic-container');
+  if (!container) return;
+
+  if (!chants || !Array.isArray(chants)) {
+    container.innerHTML = '<p class="error-msg">Chants currently unavailable.</p>';
+    return;
+  }
+
+  container.innerHTML = chants.map(chant => {
+    const lines = chant.lyrics.split('\n');
+    const firstLine = lines[0] || '';
+    const formattedLyrics = chant.lyrics.replace(/\n/g, '<br>');
+
+    return `
+      <div class="chant-card" id="chant-card-${chant.id}">
+        <div class="chant-header">
+          <div class="chant-info">
+            <div class="chant-music-icon">🎵</div>
+            <h3>${chant.title}</h3>
+          </div>
+          <button class="chant-play-btn" onclick="toggleChant(${chant.id})" aria-label="Play mock chant audio">
+            <span class="play-icon">▶</span>
+            <span class="pause-icon" style="display:none;">⏸</span>
+          </button>
+        </div>
+        <div class="chant-visualizer" style="display:none;">
+          <div class="visualizer-bar"></div>
+          <div class="visualizer-bar"></div>
+          <div class="visualizer-bar"></div>
+          <div class="visualizer-bar"></div>
+          <div class="visualizer-bar"></div>
+          <div class="visualizer-bar"></div>
+        </div>
+        <div class="chant-lyrics-preview">
+          "${firstLine}..."
+        </div>
+        <div class="chant-lyrics" style="display:none;">
+          ${formattedLyrics}
+        </div>
+        <button class="chant-expand-btn" onclick="toggleLyrics(${chant.id})">Show Lyrics</button>
+      </div>
+    `;
+  }).join('');
+}
+
+// ─── TEAM RENDERING ─────────────────────────────
+function renderTeam(team) {
+  const container = document.getElementById('team-dynamic-container');
+  if (!container) return;
+
+  if (!team || !Array.isArray(team)) {
+    container.innerHTML = '<p class="error-msg">Core Team members currently unavailable.</p>';
+    return;
+  }
+
+  container.innerHTML = team.map(member => {
+    const initials = member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+    const imageHtml = member.imageUrl 
+      ? `<img src="${member.imageUrl}" alt="${member.name}" class="team-avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />`
+      : '';
+
+    return `
+      <div class="team-card" data-animate="fade-up">
+        <div class="team-avatar-wrapper">
+          <div class="team-avatar">
+            ${imageHtml}
+            <div class="team-avatar-placeholder" style="${member.imageUrl ? 'display: none;' : 'display: flex;'}">
+              <span>${initials}</span>
+            </div>
+          </div>
+        </div>
+        <div class="team-info">
+          <h3>${member.name}</h3>
+          <p class="team-role">${member.designation}</p>
+          <div class="team-social">
+            <a href="https://www.instagram.com/muscbengaluru" target="_blank" rel="noopener" class="team-social-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ─── HOME PAGE PREVIEWS & LOGO COUNT ────────────
+function updateHeroMembersCount(countText) {
+  const el = document.getElementById('hero-members-count');
+  if (!el) return;
+
+  let displayVal = (countText || "200+ MEMBERS STRONG").toUpperCase();
+  if (displayVal.endsWith(" STRONG")) {
+    const mainPart = displayVal.replace(" STRONG", "");
+    el.textContent = mainPart;
+  } else {
+    el.textContent = displayVal;
+  }
+}
+
+function renderHomePreviews() {
+  // 1. Featured Screening Preview
+  const screeningsHomeContainer = document.getElementById('screenings-home-container');
+  if (screeningsHomeContainer && siteData.screenings && siteData.screenings.featured) {
+    const featured = siteData.screenings.featured;
+    screeningsHomeContainer.innerHTML = `
+      <div class="screening-card featured-screening" data-animate="fade-up" style="max-width: 600px; margin: 0 auto;">
+        <div class="screening-badge">🔴 Next Live Screening</div>
+        <div class="screening-poster">
+          <img src="${featured.posterUrl}" alt="Match Screening Poster" onerror="this.src='images/screening2.jpg'" loading="lazy" />
+          <div class="screening-poster-overlay">
+            <div class="screening-competition">${featured.competition}</div>
+            <div class="screening-matchup">
+              <span class="team-home">${featured.homeTeam}</span>
+              <span class="vs">VS</span>
+              <span class="team-away">${featured.awayTeam}</span>
+            </div>
+          </div>
+        </div>
+        <div class="screening-details">
+          <div class="screening-info-row">
+            <div class="screening-info-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              ${featured.date}
+            </div>
+            <div class="screening-info-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              ${featured.venue}
+            </div>
+          </div>
+          <div class="screening-actions">
+            <a href="${featured.rsvpLink}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">RSVP Now</a>
+            <a href="${featured.instaLink}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 2. Gallery Highlights (first 4 items)
+  const galleryHomeContainer = document.getElementById('gallery-home-container');
+  if (galleryHomeContainer && siteData.gallery && Array.isArray(siteData.gallery)) {
+    const highlights = siteData.gallery.slice(0, 4);
+    galleryHomeContainer.innerHTML = highlights.map(item => {
+      let typeClass = '';
+      if (item.type === 'tall') typeClass = 'tall';
+      else if (item.type === 'wide') typeClass = 'wide';
+
+      return `
+        <div class="gallery-item ${typeClass}" tabindex="0" role="button" aria-label="View gallery image">
+          <img src="${item.imageUrl}" alt="${item.title}" onerror="this.src='images/stadium_hero.jpg'" loading="lazy" />
+          <div class="gallery-overlay">
+            <span>${item.title}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 3. Hero Emblem members count
+  updateHeroMembersCount(siteData.membersCount);
+}
+
+// ─── CHANTS MOCK AUDIO PLAYER INTERACTIVE ACTIONS ───
+window.toggleChant = function(id) {
+  const card = document.getElementById(`chant-card-${id}`);
+  if (!card) return;
+
+  const isPlaying = card.classList.contains('playing');
+
+  // Stop all other playing chants
+  document.querySelectorAll('.chant-card').forEach(c => {
+    c.classList.remove('playing');
+    const playBtn = c.querySelector('.play-icon');
+    const pauseBtn = c.querySelector('.pause-icon');
+    const visualizer = c.querySelector('.chant-visualizer');
+    if (playBtn) playBtn.style.display = 'inline';
+    if (pauseBtn) pauseBtn.style.display = 'none';
+    if (visualizer) visualizer.style.display = 'none';
+  });
+
+  if (!isPlaying) {
+    card.classList.add('playing');
+    const playBtn = card.querySelector('.play-icon');
+    const pauseBtn = card.querySelector('.pause-icon');
+    const visualizer = card.querySelector('.chant-visualizer');
+    if (playBtn) playBtn.style.display = 'none';
+    if (pauseBtn) pauseBtn.style.display = 'inline';
+    if (visualizer) visualizer.style.display = 'flex';
+  }
+};
+
+window.toggleLyrics = function(id) {
+  const card = document.getElementById(`chant-card-${id}`);
+  if (!card) return;
+
+  const lyrics = card.querySelector('.chant-lyrics');
+  const preview = card.querySelector('.chant-lyrics-preview');
+  const btn = card.querySelector('.chant-expand-btn');
+
+  if (lyrics.style.display === 'none') {
+    lyrics.style.display = 'block';
+    preview.style.display = 'none';
+    btn.textContent = 'Hide Lyrics';
+    card.classList.add('expanded');
+  } else {
+    lyrics.style.display = 'none';
+    preview.style.display = 'block';
+    btn.textContent = 'Show Lyrics';
+    card.classList.remove('expanded');
+  }
+};
+
+// ─── TABS SYSTEM (SPA) ──────────────────────────
+const tabMap = {
+  'home': 'home',
+  'hero': 'home',
+  'about': 'home',
+  'home-screenings': 'home',
+  'community': 'home',
+  'home-gallery': 'home',
+  'home-chants': 'home',
+  'membership': 'membership',
+  'benefits': 'membership',
+  'screenings': 'screenings',
+  'meetups': 'meetups',
+  'football': 'football',
+  'gallery': 'gallery',
+  'announcements': 'announcements',
+  'chants': 'chants',
+  'team': 'team'
+};
+
+function switchTab(tabId) {
+  // Hide all views
+  document.querySelectorAll('.tab-view').forEach(view => {
+    view.classList.remove('active');
+  });
+  // Show target view
+  const targetView = document.getElementById(`view-${tabId}`);
+  if (targetView) {
+    targetView.classList.add('active');
+  }
+
+  // Update nav link active states
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('data-target') === tabId) {
+      link.classList.add('active');
+    }
+  });
+
+  // Highlight mobile menu triggers if any
+  const overlay = document.getElementById('mobileOverlay');
+  if (overlay && overlay.classList.contains('open')) {
+    // Close menu on navigation
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    if (hamburger) hamburger.classList.remove('open');
+    if (navLinks) navLinks.classList.remove('mobile-open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+function handleHashChange() {
+  const hash = window.location.hash.substring(1) || 'home';
+  const tabId = tabMap[hash] || 'home';
+  
+  switchTab(tabId);
+  
+  // Scroll to section if it's a sub-section
+  if (hash && hash !== tabId && tabMap[hash]) {
+    const targetEl = document.getElementById(hash);
+    if (targetEl) {
+      setTimeout(() => {
+        const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+        const targetPos = targetEl.getBoundingClientRect().top + window.scrollY - navH;
+        window.scrollTo({ top: targetPos, behavior: 'smooth' });
+      }, 100);
+    }
+  } else {
+    window.scrollTo({ top: 0 });
+  }
+}
+
+function initTabs() {
+  document.querySelectorAll('.tab-trigger').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      const href = trigger.getAttribute('href');
+      if (window.location.hash === href) {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+          const targetPos = targetEl.getBoundingClientRect().top + window.scrollY - navH;
+          window.scrollTo({ top: targetPos, behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  window.addEventListener('hashchange', handleHashChange);
+  // Initial run
+  handleHashChange();
 }
 
 // ─── APP MODALS SYSTEM ──────────────────────────
@@ -777,6 +1125,12 @@ function initAdminDashboard() {
         instaLink: document.getElementById('screen-insta').value,
         posterUrl: document.getElementById('screen-poster').value || 'images/screening2.jpg'
       };
+      
+      const membersCountInput = document.getElementById('global-members-count');
+      if (membersCountInput) {
+        siteData.membersCount = membersCountInput.value;
+      }
+      
       saveData();
     });
   }
@@ -825,6 +1179,56 @@ function initAdminDashboard() {
       populateGalleryList();
     });
   }
+
+  // Team picture uploader
+  bindImageUpload('team-file-input', 'team-upload-status', 'team-member-url', 'team-poster-preview');
+
+  // Team Form Submit
+  const teamForm = document.getElementById('admin-team-form');
+  if (teamForm) {
+    teamForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newMember = {
+        id: Date.now(),
+        name: document.getElementById('team-member-name').value,
+        designation: document.getElementById('team-member-role').value,
+        imageUrl: document.getElementById('team-member-url').value || ''
+      };
+      if (!siteData.team) siteData.team = [];
+      siteData.team.push(newMember);
+      saveData();
+      teamForm.reset();
+
+      // Reset preview
+      const preview = document.getElementById('team-poster-preview');
+      if (preview) preview.innerHTML = 'No Photo Selected';
+      const statusEl = document.getElementById('team-upload-status');
+      if (statusEl) {
+        statusEl.textContent = 'Select a photo or leave blank to use initials.';
+        statusEl.style.color = 'var(--white-50)';
+      }
+
+      populateTeamList();
+    });
+  }
+
+  // Chants Form Submit
+  const chantsForm = document.getElementById('admin-chants-form');
+  if (chantsForm) {
+    chantsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newChant = {
+        id: Date.now(),
+        title: document.getElementById('chant-title').value,
+        lyrics: document.getElementById('chant-lyrics').value
+      };
+      if (!siteData.chants) siteData.chants = [];
+      siteData.chants.push(newChant);
+      saveData();
+      chantsForm.reset();
+      populateChantsList();
+    });
+  }
 }
 
 // Populate Dash fields
@@ -844,8 +1248,15 @@ function populateDashboard() {
     preview.innerHTML = `<img src="${featured.posterUrl}" alt="Current Poster" />`;
   }
 
+  const membersCountInput = document.getElementById('global-members-count');
+  if (membersCountInput) {
+    membersCountInput.value = siteData.membersCount || "200+ Members Strong";
+  }
+
   populateAnnouncementsList();
   populateGalleryList();
+  populateTeamList();
+  populateChantsList();
 }
 
 // Image Upload Helper
@@ -967,6 +1378,53 @@ window.deleteGalleryImage = function(id) {
   siteData.gallery = siteData.gallery.filter(img => img.id !== id);
   saveData();
   populateGalleryList();
+};
+
+// Team Admin List
+function populateTeamList() {
+  const container = document.getElementById('admin-team-list');
+  if (!container) return;
+
+  if (!siteData.team) siteData.team = [];
+
+  container.innerHTML = siteData.team.map(member => `
+    <div class="admin-list-item">
+      <div class="admin-item-info">
+        <span class="admin-item-title">${member.name}</span>
+        <span class="admin-item-subtitle">${member.designation}</span>
+      </div>
+      <button class="btn-delete" onclick="deleteTeamMember(${member.id})" title="Delete Member">&times;</button>
+    </div>
+  `).join('');
+}
+
+// Chants Admin List
+function populateChantsList() {
+  const container = document.getElementById('admin-chants-list');
+  if (!container) return;
+
+  if (!siteData.chants) siteData.chants = [];
+
+  container.innerHTML = siteData.chants.map(chant => `
+    <div class="admin-list-item">
+      <div class="admin-item-info">
+        <span class="admin-item-title">${chant.title}</span>
+      </div>
+      <button class="btn-delete" onclick="deleteChant(${chant.id})" title="Delete Chant">&times;</button>
+    </div>
+  `).join('');
+}
+
+window.deleteTeamMember = function(id) {
+  siteData.team = siteData.team.filter(member => member.id !== id);
+  saveData();
+  populateTeamList();
+};
+
+window.deleteChant = function(id) {
+  siteData.chants = siteData.chants.filter(chant => chant.id !== id);
+  saveData();
+  populateChantsList();
 };
 
 // Save Data Call

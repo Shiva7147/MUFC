@@ -38,15 +38,18 @@
  
   
   <ul class="nav-links" id="navLinks">
-    <li><a href="#about" class="nav-link">About</a></li>
-    <li><a href="#membership" class="nav-link">Membership</a></li>
-    <li><a href="#screenings" class="nav-link">Screenings</a></li>
-    <li><a href="#meetups" class="nav-link modal-trigger-link">Meetups</a></li>
-    <li><a href="#football" class="nav-link modal-trigger-link">Matchdays</a></li>
-    <li><a href="#community" class="nav-link modal-trigger-link">Red Army</a></li>
+    <li><a href="#home" class="nav-link tab-trigger active" data-target="home">Home</a></li>
+    <li><a href="#membership" class="nav-link tab-trigger" data-target="membership">Membership</a></li>
+    <li><a href="#screenings" class="nav-link tab-trigger" data-target="screenings">Screenings</a></li>
+    <li><a href="#meetups" class="nav-link tab-trigger" data-target="meetups">Meetups</a></li>
+    <li><a href="#football" class="nav-link tab-trigger" data-target="football">Matchdays</a></li>
+    <li><a href="#gallery" class="nav-link tab-trigger" data-target="gallery">Gallery</a></li>
+    <li><a href="#announcements" class="nav-link tab-trigger" data-target="announcements">Announcements</a></li>
+    <li><a href="#chants" class="nav-link tab-trigger" data-target="chants">Chants</a></li>
+    <li><a href="#team" class="nav-link tab-trigger" data-target="team">Core Team</a></li>
     <li class="mobile-only-link"><a href="#contact" class="nav-link modal-trigger-link">Have Questions?</a></li>
     <li>
-      <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-nav-cta" id="nav-join-btn">
+      <a href="https://beacons.ai/muscb" target="_blank" rel="noopener" class="btn btn-nav-cta" id="nav-join-btn">
         Join Now
       </a>
     </li>
@@ -65,7 +68,9 @@
  <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
  HERO SECTION
  &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <section class="hero" id="hero">
+ <!-- SPA VIEW: HOME -->
+  <div id="view-home" class="tab-view active">
+    <section class="hero" id="hero">
  <div class="hero-bg">
  <div class="hero-bg-img" style="background-image: url('images/old_trafford.jpg');"></div>
  <div class="hero-overlay"></div>
@@ -78,41 +83,49 @@
  Official Man Utd Supporters Club &mdash; Bengaluru
  </div>
  <div class="hero-emblem" data-animate="scale-in">
- <div class="emblem-ring outer">
- <div class="emblem-ring inner">
- <div class="emblem-center">
- <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
- <text x="32" y="28" text-anchor="middle" fill="white" font-size="14" font-weight="900" font-family="Bebas Neue, sans-serif" letter-spacing="1">MUSCB</text>
- <text x="32" y="42" text-anchor="middle" fill="#F4C430" font-size="6" font-family="Inter, sans-serif" font-weight="600" letter-spacing="0.5">BENGALURU'S</text>
- <text x="32" y="50" text-anchor="middle" fill="#F4C430" font-size="6" font-family="Inter, sans-serif" font-weight="600" letter-spacing="0.5">RED DEVILS</text>
- <path d="M32 8 L35 15 L32 13 L29 15 Z" fill="#F4C430"/>
- </svg>
- </div>
- </div>
- </div>
- </div>
+    <div class="emblem-wrapper">
+      <div class="emblem-ring outer">
+        <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; inset: 0;">
+          <path id="outerRingPath" d="M 70, 70 m -58, 0 a 58,58 0 1,1 116,0 a 58,58 0 1,1 -116,0" fill="none" />
+          <text fill="#F4C430" font-family="Inter, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.8">
+            <textPath href="#outerRingPath" startOffset="0%">
+              MUSC BENGALURU • BENGALURU IS RED • GGMU • ONE UNITED •
+            </textPath>
+          </text>
+        </svg>
+      </div>
+      <div class="emblem-ring inner" style="position: absolute; z-index: 2;">
+        <div class="emblem-center">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="40" y="32" text-anchor="middle" fill="white" font-size="16" font-weight="900" font-family="Bebas Neue, sans-serif" letter-spacing="1">MUSCB</text>
+            <text x="40" y="48" text-anchor="middle" fill="#F4C430" font-size="6.5" font-family="Inter, sans-serif" font-weight="800" letter-spacing="0.5" id="hero-members-count">200+ MEMBERS</text>
+            <text x="40" y="56" text-anchor="middle" fill="#F4C430" font-size="6.5" font-family="Inter, sans-serif" font-weight="800" letter-spacing="0.5">STRONG</text>
+            <path d="M40 10 L43 17 L40 15 L37 17 Z" fill="#F4C430"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
  <h1 class="hero-headline" data-animate="fade-up">
- One <span class="text-red">UNITED</span>.<br>
- One <span class="text-gold">Bengaluru</span>.<br>
- One <span class="text-white">Red Army.</span>
- </h1>
+    Bengaluru is <span class="text-red">Red</span>
+  </h1>
  <p class="hero-subheadline" data-animate="fade-up" data-delay="100">
- The official home for Manchester United fans in Bengaluru &mdash; screenings, memberships, meetups, giveaways, football, and community.
- </p>
+    Manchester United Supporters Club Bengaluru (MUSCB) is the official supporters club for Manchester United fans in Bengaluru. We bring Reds together through match screenings, events, and turf games. One UNITED. One Bengaluru. One Red Army.
+  </p>
  <div class="hero-cta-group" data-animate="fade-up" data-delay="200">
- <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-primary" id="hero-member-btn">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
- Become an Official Member
- </a>
- <a href="https://www.instagram.com/muscbengaluru/" target="_blank" rel="noopener" class="btn btn-secondary" id="hero-community-btn">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
- Join the Community
- </a>
- <a href="#screenings" class="btn btn-ghost" id="hero-events-btn">
- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- View Upcoming Events
- </a>
- </div>
+    <a href="#membership" class="btn btn-primary tab-trigger" data-target="membership" id="hero-member-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      Become an Official Member
+    </a>
+    <a href="https://chat.whatsapp.com/FRd6UXcesGNIMG5b4jgGy4?s=cl&p=i&ilr=1&amv=2" target="_blank" rel="noopener" class="btn btn-secondary" id="hero-community-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Join WhatsApp Community
+    </a>
+    <a href="#screenings" class="btn btn-ghost tab-trigger" data-target="screenings" id="hero-events-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      View Upcoming Events
+    </a>
+  </div>
  <div class="hero-ggmu" data-animate="fade-up" data-delay="300">
  <span class="ggmu-text">G G M U</span>
  </div>
@@ -141,19 +154,15 @@
  </div>
  </div>
  </section>
-
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- ABOUT SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <section class="section about-section" id="about">
+    <section class="section about-section" id="about">
  <div class="container">
  <div class="section-label" data-animate="fade-up">Who We Are</div>
  <h2 class="section-title" data-animate="fade-up">
  Your home for <span class="text-red">Manchester United</span><br>in Bengaluru
  </h2>
  <p class="section-subtitle" data-animate="fade-up">
- MUSCB is the official Manchester United Supporters Club in Bengaluru &mdash; a community of passionate Reds who come together for screenings, meetups, football matchdays, memberships, giveaways, and unforgettable United moments.
- </p>
+  Manchester United Supporters Club Bengaluru (MUSCB) is the official supporters club for Manchester United fans in Bengaluru. We bring Reds together through match screenings, football events, tournaments, FPL competitions, and community meetups. Whether you're a lifelong supporter or a new fan, MUSCB is your home for experiencing Manchester United with fellow Reds.
+  </p>
 
  <div class="about-grid" data-animate="fade-up">
  <div class="about-visual">
@@ -231,11 +240,116 @@
  </div>
  </div>
  </section>
+    
+  <!-- Featured Screening Preview (Home Page) -->
+  <section class="section screenings-preview-section" id="home-screenings">
+    <div class="container animate-on-tab-active">
+      <div class="section-label">Watch Live</div>
+      <h2 class="section-title">Featured Match <span class="text-red">Screening</span></h2>
+      <p class="section-subtitle">Join us at Church Street Social for the next live screening. Experience Old Trafford in the heart of Bengaluru.</p>
+      
+      <div id="screenings-home-container">
+        <!-- Rendered Dynamically in JS -->
+      </div>
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="#screenings" class="btn btn-outline tab-trigger" data-target="screenings">View All Screenings &rarr;</a>
+      </div>
+    </div>
+  </section>
 
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- OUM MEMBERSHIP SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <section class="section membership-section" id="membership">
+  <!-- Red Army Community Section (Home Page) -->
+  <section class="section community-section" id="community">
+ <div class="container">
+ <div class="section-label" data-animate="fade-up">The Red Army</div>
+ <h2 class="section-title" data-animate="fade-up">
+ Join <span class="text-red">Bengaluru's</span> Red Army
+ </h2>
+ <p class="section-subtitle" data-animate="fade-up">
+ Being part of MUSCB isn't just about watching football &mdash; it's about belonging to something bigger. A movement. A family. A real-world Red Army right here in Bengaluru.
+ </p>
+
+ <div class="community-grid" data-animate="fade-up">
+ <div class="community-reason">
+ <div class="reason-icon"></div>
+ <h3>Meet United Fans in Bengaluru</h3>
+ <p>Connect with hundreds of passionate Reds who live, breathe, and bleed Manchester United. Build friendships that last beyond football.</p>
+ </div>
+ <div class="community-reason">
+ <div class="reason-icon"></div>
+ <h3>Watch Matches Together</h3>
+ <p>No more watching United alone. Every big match, every cup final, every historic night &mdash; watch it with the Red Army beside you.</p>
+ </div>
+ <div class="community-reason">
+ <div class="reason-icon"></div>
+ <h3>Join Chants & Singing Section</h3>
+ <p>MUSCB has its own singing section and custom Red Army chants. Sing your heart out with fellow Reds every matchday.</p>
+ </div>
+ <div class="community-reason">
+ <div class="reason-icon"></div>
+ <h3>Giveaways & Exclusive Events</h3>
+ <p>Member-only giveaways, merchandise drops, signed memorabilia, and exclusive events you won't find anywhere else in Bengaluru.</p>
+ </div>
+ <div class="community-reason">
+ <div class="reason-icon">&#9917;</div>
+ <h3>Play Football & Join Tournaments</h3>
+ <p>From casual kickabouts to organized tournaments &mdash; live out your United dreams on actual football pitches across Bengaluru.</p>
+ </div>
+ <div class="community-reason">
+ <div class="reason-icon"></div>
+ <h3>Be Part of Something Real</h3>
+ <p>MUSCB is not just a social media page. It's a real community with real people, real events, and a real passion for Manchester United.</p>
+ </div>
+ </div>
+
+ <div class="community-banner" data-animate="fade-up">
+ <div class="community-banner-text">
+ <div class="banner-slogan">One UNITED, One Bengaluru, One of us.</div>
+ <p>Become an Official United Member, register with MUSCB, and let's make this season unforgettable.</p>
+ </div>
+ <div class="community-banner-cta">
+ <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-gold btn-lg" id="community-join-btn">
+ Join the Red Army
+ </a>
+ </div>
+ </div>
+ </div>
+ </section>
+
+  <!-- Gallery Highlights (Home Page) -->
+  <section class="section gallery-preview-section" id="home-gallery">
+    <div class="container animate-on-tab-active">
+      <div class="section-label">Fan Moments</div>
+      <h2 class="section-title">Gallery <span class="text-red">Highlights</span></h2>
+      <p class="section-subtitle">A glimpse of our screenings, football matchdays, and community meetups in Bengaluru.</p>
+      
+      <div id="gallery-home-container" class="gallery-grid-preview">
+        <!-- Rendered Dynamically in JS -->
+      </div>
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="#gallery" class="btn btn-outline tab-trigger" data-target="gallery">View Full Gallery &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chants Highlight (Home Page) -->
+  <section class="section chants-preview-section" id="home-chants">
+    <div class="container animate-on-tab-active">
+      <div class="section-label">Matchday Atmosphere</div>
+      <h2 class="section-title">Stand Up & <span class="text-red">Sing</span></h2>
+      <p class="section-subtitle">Chant along with the Red Army during match screenings. Learn the lyrics to our famous fan anthems.</p>
+      
+      <div class="chants-preview-card">
+        <div class="chant-badge">🎵 Highlight Chant</div>
+        <h3>Glory Glory Man United</h3>
+        <p>"Glory, glory, Man United, Glory, glory, Man United..."</p>
+        <a href="#chants" class="btn btn-primary tab-trigger" data-target="chants">Listen & Learn Chants &rarr;</a>
+      </div>
+    </div>
+  </section>
+  </div>
+  <!-- SPA VIEW: MEMBERSHIP -->
+  <div id="view-membership" class="tab-view">
+    <section class="section membership-section" id="membership">
  <div class="membership-bg-pattern"></div>
  <div class="container">
  <div class="section-label light" data-animate="fade-up">Official United Membership</div>
@@ -298,7 +412,7 @@
  </div>
 
  <div class="oum-cta-group" data-animate="fade-up">
- <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-gold" id="oum-buy-btn">
+ <a href="https://tickets.manutd.com/memberships" target="_blank" rel="noopener" class="btn btn-gold" id="oum-buy-btn">
  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
  Buy OUM
  </a>
@@ -309,11 +423,7 @@
  </div>
  </div>
  </section>
-
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- OUM BENEFITS SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <section class="section benefits-section" id="benefits">
+    <section class="section benefits-section" id="benefits">
  <div class="container">
  <div class="section-label" data-animate="fade-up">Why Join</div>
  <h2 class="section-title" data-animate="fade-up">
@@ -450,11 +560,10 @@
  </div>
  </div>
  </section>
-
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- MATCH SCREENINGS SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <section class="section screenings-section" id="screenings">
+  </div>
+  <!-- SPA VIEW: SCREENINGS -->
+  <div id="view-screenings" class="tab-view">
+    <section class="section screenings-section" id="screenings">
  <div class="screenings-bg"></div>
  <div class="container">
  <div class="section-label light" data-animate="fade-up">Watch Together</div>
@@ -477,29 +586,81 @@
  </div>
  </div>
  </section>
+  </div>
+  <!-- SPA VIEW: MEETUPS -->
+  <div id="view-meetups" class="tab-view">
+    <section class="section meetups-section" id="meetups">
+ <div class="container">
+ <div class="section-label" data-animate="fade-up">Fan Events</div>
+ <h2 class="section-title" data-animate="fade-up">
+ Meetups & <span class="text-red">Networking</span>
+ </h2>
+ <p class="section-subtitle" data-animate="fade-up">
+ United Fans Assemble. Whether it's a casual fan meetup at a café in Church Street or a virtual hangout with Reds across Bengaluru &mdash; MUSCB brings people together.
+ </p>
 
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- MEETUPS SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- 
+ <div class="meetups-grid" data-animate="fade-up">
+ <div class="meetup-card virtual">
+ <div class="meetup-type-badge"> Virtual</div>
+ <div class="meetup-icon">
+ <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8,21 12,17 16,21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+ </div>
+ <h3>Virtual Meet & Greet</h3>
+ <p>Connect with MUSCB members online. Monthly virtual sessions for introductions, fan discussions, match analysis, and United banter.</p>
+ <div class="meetup-tags">
+ <span class="tag">Online</span>
+ <span class="tag">Monthly</span>
+ <span class="tag">All Members</span>
+ </div>
+ <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="meetup-virtual-btn">RSVP Now</a>
+ </div>
 
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- FOOTBALL SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- 
+ <div class="meetup-card featured-meetup">
+ <div class="meetup-type-badge"> Featured</div>
+ <div class="meetup-img">
+ <img src="images/fan_meetup.jpg" alt="MUSCB Fan Meetup" loading="lazy" />
+ </div>
+ <h3>United Fans Assemble</h3>
+ <p>Our signature fan meetup event where Bengaluru's Reds come together &mdash; chants, football talk, jersey swaps, and pure United energy.</p>
+ <div class="meetup-tags">
+ <span class="tag">In-Person</span>
+ <span class="tag">Bengaluru</span>
+ <span class="tag">All Welcome</span>
+ </div>
+ <div class="meetup-actions">
+ <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="meetup-assemble-rsvp-btn">RSVP Now</a>
+ <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" id="meetup-details-btn">View Details</a>
+ </div>
+ </div>
 
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- COMMUNITY SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- 
+ <div class="meetup-card inperson">
+ <div class="meetup-type-badge"> In-Person</div>
+ <div class="meetup-icon">
+ <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+ </div>
+ <h3>Fan Networking Meetup</h3>
+ <p>Casual in-person meetups at iconic Bengaluru spots &mdash; Church Street Social, Koramangala hangouts, and more. Bring your jersey.</p>
+ <div class="meetup-tags">
+ <span class="tag">Social</span>
+ <span class="tag">Networking</span>
+ <span class="tag">Jersey Required</span>
+ </div>
+ <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="meetup-inperson-btn">RSVP Now</a>
+ </div>
+ </div>
 
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- GALLERY SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <!-- ══════════════════════════════════════════════ 
-  FOOTBALL TEAM SECTION
-  ══════════════════════════════════════════════ -->
-  <section class="section football-section" id="football">
+ <div class="meetups-cta" data-animate="fade-up">
+ <p>Never miss an MUSCB event. Join our community for instant notifications.</p>
+ <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-primary" id="meetup-community-btn">
+ Join Community for Event Alerts
+ </a>
+ </div>
+ </div>
+ </section>
+  </div>
+  <!-- SPA VIEW: FOOTBALL -->
+  <div id="view-football" class="tab-view">
+    <section class="section football-section" id="football">
  <div class="football-bg">
  <div class="pitch-lines-full"></div>
  <div class="football-overlay"></div>
@@ -583,8 +744,10 @@
  </div>
  </div>
  </section>
-
-  <section class="section gallery-section" id="gallery">
+  </div>
+  <!-- SPA VIEW: GALLERY -->
+  <div id="view-gallery" class="tab-view">
+    <section class="section gallery-section" id="gallery">
  <div class="container">
  <div class="section-label" data-animate="fade-up">Our Moments</div>
  <h2 class="section-title" data-animate="fade-up">
@@ -604,11 +767,10 @@
  </div>
  </div>
  </section>
-
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- ANNOUNCEMENTS SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <section class="section announcements-section" id="announcements">
+  </div>
+  <!-- SPA VIEW: ANNOUNCEMENTS -->
+  <div id="view-announcements" class="tab-view">
+    <section class="section announcements-section" id="announcements">
  <div class="announcements-bg"></div>
  <div class="container">
  <div class="section-label light" data-animate="fade-up">Stay Updated</div>
@@ -625,113 +787,37 @@
   </div></div>
  </div>
  </section>
-
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- QUICK LINKS SECTION
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <section class="section links-section" id="links">
- <div class="container">
- <div class="section-label" data-animate="fade-up">Quick Access</div>
- <h2 class="section-title" data-animate="fade-up">
- Everything You <span class="text-red">Need</span>
- </h2>
- <p class="section-subtitle" data-animate="fade-up">
- All MUSCB links in one place. No more searching through posts &mdash; everything is right here.
- </p>
-
- <div class="links-grid" data-animate="fade-up">
-  <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="link-card primary-link" id="links-oum-btn">
-  <div class="link-card-icon">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
   </div>
-  <div class="link-card-text">
-  <strong>Buy OUM</strong>
-  <span>Official United Membership</span>
+  <!-- SPA VIEW: CHANTS -->
+  <div id="view-chants" class="tab-view">
+    <section class="section chants-section" id="chants">
+      <div class="chants-bg"></div>
+      <div class="container animate-on-tab-active">
+        <div class="section-label light">Matchday Atmosphere</div>
+        <h2 class="section-title light">MUSCB <span class="text-red">Chants</span></h2>
+        <p class="section-subtitle light">Sing your heart out with the Red Army. Learn the official chants and lyrics sung live during screenings and turf matches in Bengaluru.</p>
+        
+        <div class="chants-grid" id="chants-dynamic-container">
+          <!-- Rendered Dynamically from data.json -->
+        </div>
+      </div>
+    </section>
   </div>
-  <div class="link-card-arrow">&rarr;</div>
-  </a>
-
-  <a href="#benefits" class="link-card" id="links-perks-btn">
-  <div class="link-card-icon">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-  </div>
-  <div class="link-card-text">
-  <strong>OUM Perks</strong>
-  <span>View all member benefits</span>
-  </div>
-  <div class="link-card-arrow">&rarr;</div>
-  </a>
-
-  <a href="https://forms.gle/d9csbnU3xJFCGDcD7" target="_blank" rel="noopener" class="link-card" id="links-form-btn">
-  <div class="link-card-icon">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
-  </div>
-  <div class="link-card-text">
-  <strong>Fill OUM Form</strong>
-  <span>MUSCB membership confirmation form</span>
-  </div>
-  <div class="link-card-arrow">&rarr;</div>
-  </a>
-
-  <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="link-card instagram-link" id="links-insta-btn">
-  <div class="link-card-icon">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-  </div>
-  <div class="link-card-text">
-  <strong>Instagram</strong>
-  <span>Follow @MUSCB for updates</span>
-  </div>
-  <div class="link-card-arrow">&rarr;</div>
-  </a>
-
-  <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="link-card" id="links-rsvp-btn">
-  <div class="link-card-icon">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-  </div>
-  <div class="link-card-text">
-  <strong>RSVP for Events</strong>
-  <span>Register for screenings & meetups</span>
-  </div>
-  <div class="link-card-arrow">&rarr;</div>
-  </a>
-
-  <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="link-card whatsapp-link primary-link-whatsapp" id="links-whatsapp-btn">
-  <div class="link-card-icon">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-  </div>
-  <div class="link-card-text">
-  <strong>WhatsApp Community</strong>
-  <span>Join the MUSCB WhatsApp group</span>
-  </div>
-  <div class="link-card-arrow">&rarr;</div>
-  </a>
-  </div>
-  </div>
-  </section>
-
- <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
- </div>
- <h3>Join the Community</h3>
- <p>Join our WhatsApp community to stay connected with thousands of MUSCB members and never miss an update from the Red Army.</p>
- <span class="contact-link">Join Community &rarr;</span>
- </a>
-
- <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="contact-card" id="contact-team-btn">
- <div class="contact-card-icon team">
- <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
- </div>
- <h3>Contact the Core Team</h3>
- <p>For official matters, partnerships, collaborations, or media inquiries &mdash; reach out directly to the MUSCB core team via our form.</p>
- <span class="contact-link">Contact Core Team &rarr;</span>
- </a>
- </div>
- </div>
- </section>
-
- <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
- FOOTER
- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
- <footer class="footer" id="footer">
+  <!-- SPA VIEW: CORE TEAM -->
+  <div id="view-team" class="tab-view">
+    <section class="section team-section" id="team">
+      <div class="team-bg"></div>
+      <div class="container animate-on-tab-active">
+        <div class="section-label">Core Committee</div>
+        <h2 class="section-title">Meet the <span class="text-red">Core Team</span></h2>
+        <p class="section-subtitle">The passionate volunteers behind Manchester United Supporters Club Bengaluru. Leading match screenings, football games, and community events.</p>
+        
+        <div class="team-grid" id="team-dynamic-container">
+          <!-- Rendered Dynamically from data.json -->
+        </div>
+      </div>
+    </section>
+  </div><footer class="footer" id="footer">
  <div class="footer-bg"></div>
  <div class="container">
  <div class="footer-top">
@@ -759,7 +845,7 @@
  <div class="footer-links-column">
  <h4>Membership</h4>
  <ul>
- <li><a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" id="footer-oum-btn">Buy OUM</a></li>
+ <li><a href="https://tickets.manutd.com/memberships" target="_blank" rel="noopener" id="footer-oum-btn">Buy OUM</a></li>
  <li><a href="https://forms.gle/d9csbnU3xJFCGDcD7" target="_blank" rel="noopener" id="footer-form-btn">MUSCB Form</a></li>
  <li><a href="#benefits" id="footer-benefits-link">OUM Benefits</a></li>
  <li><a href="#membership" id="footer-membership-link">How It Works</a></li>
@@ -778,7 +864,7 @@
  <h4>Connect</h4>
  <ul>
  <li><a href="https://www.instagram.com/muscbengaluru/" target="_blank" rel="noopener" id="footer-insta-btn">@muscbengaluru</a></li>
- <li><a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" id="footer-whatsapp-btn">WhatsApp Community</a></li>
+ <li><a href="https://chat.whatsapp.com/FRd6UXcesGNIMG5b4jgGy4?s=cl&p=i&ilr=1&amv=2" target="_blank" rel="noopener" id="footer-whatsapp-btn">WhatsApp Community</a></li>
  <li><a href="#gallery" id="footer-gallery-link">Gallery</a></li>
  </ul>
  </div>
@@ -787,10 +873,10 @@
 
  <div class="footer-bottom">
  <div class="footer-social">
- <a href="https://www.instagram.com/muscbengaluru/" target="_blank" rel="noopener" class="footer-social-btn" aria-label="MUSCB Instagram" id="footer-insta-icon-btn">
+ <a href="https://www.instagram.com/muscbengaluru/" target="_blank" rel="noopener" href="https://www.instagram.com/muscbengaluru" target="_blank" rel="noopener" class="footer-social-btn" aria-label="MUSCB Instagram" id="footer-insta-icon-btn">
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
  </a>
- <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="footer-social-btn" aria-label="MUSCB WhatsApp" id="footer-wa-icon-btn">
+ <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" href="https://chat.whatsapp.com/FRd6UXcesGNIMG5b4jgGy4?s=cl&p=i&ilr=1&amv=2" target="_blank" rel="noopener" class="footer-social-btn" aria-label="MUSCB WhatsApp" id="footer-wa-icon-btn">
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
  </a>
  </div>
@@ -809,150 +895,7 @@
 
   <!-- Modals -->
   
-  <!-- Meetups Modal Overlay -->
-  <div id="meetups-modal" class="app-modal">
-    <div class="modal-content-wrapper">
-      <button class="modal-close" id="close-meetups" aria-label="Close meetups modal">&times;</button>
-      <div class="modal-scroll-area">
-        <section class="section meetups-section" id="meetups">
- <div class="container">
- <div class="section-label" data-animate="fade-up">Fan Events</div>
- <h2 class="section-title" data-animate="fade-up">
- Meetups & <span class="text-red">Networking</span>
- </h2>
- <p class="section-subtitle" data-animate="fade-up">
- United Fans Assemble. Whether it's a casual fan meetup at a café in Church Street or a virtual hangout with Reds across Bengaluru &mdash; MUSCB brings people together.
- </p>
-
- <div class="meetups-grid" data-animate="fade-up">
- <div class="meetup-card virtual">
- <div class="meetup-type-badge"> Virtual</div>
- <div class="meetup-icon">
- <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8,21 12,17 16,21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
- </div>
- <h3>Virtual Meet & Greet</h3>
- <p>Connect with MUSCB members online. Monthly virtual sessions for introductions, fan discussions, match analysis, and United banter.</p>
- <div class="meetup-tags">
- <span class="tag">Online</span>
- <span class="tag">Monthly</span>
- <span class="tag">All Members</span>
- </div>
- <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="meetup-virtual-btn">RSVP Now</a>
- </div>
-
- <div class="meetup-card featured-meetup">
- <div class="meetup-type-badge"> Featured</div>
- <div class="meetup-img">
- <img src="images/fan_meetup.jpg" alt="MUSCB Fan Meetup" loading="lazy" />
- </div>
- <h3>United Fans Assemble</h3>
- <p>Our signature fan meetup event where Bengaluru's Reds come together &mdash; chants, football talk, jersey swaps, and pure United energy.</p>
- <div class="meetup-tags">
- <span class="tag">In-Person</span>
- <span class="tag">Bengaluru</span>
- <span class="tag">All Welcome</span>
- </div>
- <div class="meetup-actions">
- <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="meetup-assemble-rsvp-btn">RSVP Now</a>
- <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" id="meetup-details-btn">View Details</a>
- </div>
- </div>
-
- <div class="meetup-card inperson">
- <div class="meetup-type-badge"> In-Person</div>
- <div class="meetup-icon">
- <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
- </div>
- <h3>Fan Networking Meetup</h3>
- <p>Casual in-person meetups at iconic Bengaluru spots &mdash; Church Street Social, Koramangala hangouts, and more. Bring your jersey.</p>
- <div class="meetup-tags">
- <span class="tag">Social</span>
- <span class="tag">Networking</span>
- <span class="tag">Jersey Required</span>
- </div>
- <a href="https://tr.ee/yYmx1pF_Zm" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="meetup-inperson-btn">RSVP Now</a>
- </div>
- </div>
-
- <div class="meetups-cta" data-animate="fade-up">
- <p>Never miss an MUSCB event. Join our community for instant notifications.</p>
- <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-primary" id="meetup-community-btn">
- Join Community for Event Alerts
- </a>
- </div>
- </div>
- </section>
-      </div>
-    </div>
-  </div>
-
-  
-  <!-- Community Modal Overlay -->
-  <div id="community-modal" class="app-modal">
-    <div class="modal-content-wrapper">
-      <button class="modal-close" id="close-community" aria-label="Close community modal">&times;</button>
-      <div class="modal-scroll-area">
-        <section class="section community-section" id="community">
- <div class="container">
- <div class="section-label" data-animate="fade-up">The Red Army</div>
- <h2 class="section-title" data-animate="fade-up">
- Join <span class="text-red">Bengaluru's</span> Red Army
- </h2>
- <p class="section-subtitle" data-animate="fade-up">
- Being part of MUSCB isn't just about watching football &mdash; it's about belonging to something bigger. A movement. A family. A real-world Red Army right here in Bengaluru.
- </p>
-
- <div class="community-grid" data-animate="fade-up">
- <div class="community-reason">
- <div class="reason-icon"></div>
- <h3>Meet United Fans in Bengaluru</h3>
- <p>Connect with hundreds of passionate Reds who live, breathe, and bleed Manchester United. Build friendships that last beyond football.</p>
- </div>
- <div class="community-reason">
- <div class="reason-icon"></div>
- <h3>Watch Matches Together</h3>
- <p>No more watching United alone. Every big match, every cup final, every historic night &mdash; watch it with the Red Army beside you.</p>
- </div>
- <div class="community-reason">
- <div class="reason-icon"></div>
- <h3>Join Chants & Singing Section</h3>
- <p>MUSCB has its own singing section and custom Red Army chants. Sing your heart out with fellow Reds every matchday.</p>
- </div>
- <div class="community-reason">
- <div class="reason-icon"></div>
- <h3>Giveaways & Exclusive Events</h3>
- <p>Member-only giveaways, merchandise drops, signed memorabilia, and exclusive events you won't find anywhere else in Bengaluru.</p>
- </div>
- <div class="community-reason">
- <div class="reason-icon">&#9917;</div>
- <h3>Play Football & Join Tournaments</h3>
- <p>From casual kickabouts to organized tournaments &mdash; live out your United dreams on actual football pitches across Bengaluru.</p>
- </div>
- <div class="community-reason">
- <div class="reason-icon"></div>
- <h3>Be Part of Something Real</h3>
- <p>MUSCB is not just a social media page. It's a real community with real people, real events, and a real passion for Manchester United.</p>
- </div>
- </div>
-
- <div class="community-banner" data-animate="fade-up">
- <div class="community-banner-text">
- <div class="banner-slogan">One UNITED, One Bengaluru, One of us.</div>
- <p>Become an Official United Member, register with MUSCB, and let's make this season unforgettable.</p>
- </div>
- <div class="community-banner-cta">
- <a href="https://tr.ee/LWCkHGoM0q" target="_blank" rel="noopener" class="btn btn-gold btn-lg" id="community-join-btn">
- Join the Red Army
- </a>
- </div>
- </div>
- </div>
- </section>
-      </div>
-    </div>
-  </div>
-
-  <!-- Contact Modal Overlay -->
+    <!-- Contact Modal Overlay -->
   <div id="contact-modal" class="app-modal">
     <div class="modal-content-wrapper">
       <button class="modal-close" id="close-contact" aria-label="Close contact modal">&times;</button>
@@ -1043,6 +986,8 @@
           <button class="dash-tab active" data-tab="screenings">Screenings</button>
           <button class="dash-tab" data-tab="announcements">Announcements</button>
           <button class="dash-tab" data-tab="gallery">Gallery</button>
+          <button class="dash-tab" data-tab="team">Core Team</button>
+          <button class="dash-tab" data-tab="chants">Chants</button>
         </div>
 
         <div class="admin-dashboard-content">
@@ -1090,7 +1035,12 @@
                   <input type="url" id="screen-insta" placeholder="https://instagram.com/..." required />
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Save Screening Details</button>
+              
+              <div class="form-group" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; margin-top: 16px;">
+                <label for="global-members-count">Spinning Logo Members Count</label>
+                <input type="text" id="global-members-count" placeholder="e.g. 200+ Members Strong" required />
+              </div>
+              <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px; grid-column: 1/-1;">Save Screening & Emblem Details</button>
             </form>
           </div>
 
@@ -1167,6 +1117,65 @@
                   </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Add Photo to Gallery</button>
+              </form>
+            </div>
+          </div>
+          
+          <!-- Core Team Tab -->
+          <div class="tab-pane" id="tab-team">
+            <div class="tab-split">
+              <div class="team-list-wrapper">
+                <h3>Current Core Team</h3>
+                <div id="admin-team-list" class="admin-items-list">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+              <form id="admin-team-form" class="admin-form">
+                <h3>Add New Team Member</h3>
+                
+                <div class="form-group">
+                  <label for="team-member-name">Member Name</label>
+                  <input type="text" id="team-member-name" placeholder="e.g. Shiva" required />
+                </div>
+                
+                <div class="form-group" style="margin-top: 12px;">
+                  <label for="team-member-role">Designation / Role</label>
+                  <input type="text" id="team-member-role" placeholder="e.g. President & Founder" required />
+                </div>
+
+                <div class="form-group" style="margin-top: 12px;">
+                  <label>Profile Picture (Direct Upload)</label>
+                  <input type="file" id="team-file-input" accept="image/*" />
+                  <span class="upload-help" id="team-upload-status">Select a photo or leave blank to use initials.</span>
+                  <input type="hidden" id="team-member-url" />
+                  <div id="team-poster-preview" class="image-preview-thumbnail">No Photo Selected</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Save Team Member</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Chants Tab -->
+          <div class="tab-pane" id="tab-chants">
+            <div class="tab-split">
+              <div class="chants-list-wrapper">
+                <h3>Current Fan Chants</h3>
+                <div id="admin-chants-list" class="admin-items-list">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+              <form id="admin-chants-form" class="admin-form">
+                <h3>Add New Chant</h3>
+                <div class="form-group">
+                  <label for="chant-title">Chant Title</label>
+                  <input type="text" id="chant-title" placeholder="e.g. Glory Glory Man United" required />
+                </div>
+                <div class="form-group" style="margin-top: 12px;">
+                  <label for="chant-lyrics">Lyrics</label>
+                  <textarea id="chant-lyrics" rows="5" placeholder="Write chant lyrics here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 12px;">Add Chant</button>
               </form>
             </div>
           </div>

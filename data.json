@@ -1,13 +1,14 @@
 {
+  "membersCount": "200+ Members Strong",
   "screenings": {
     "featured": {
       "competition": "Premier League",
       "homeTeam": "MAN UTD",
       "awayTeam": "CHELSEA",
       "date": "Saturday, 25 Oct at 9:00 PM IST",
-      "venue": "Buffalo Wild Wings, Indiranagar, Bengaluru",
-      "rsvpLink": "https://tr.ee/LWCkHGoM0q",
-      "instaLink": "https://tr.ee/LWCkHGoM0q",
+      "venue": "Church Street Social, Bengaluru",
+      "rsvpLink": "https://forms.gle/d9csbnU3xJFCGDcD7",
+      "instaLink": "https://www.instagram.com/muscbengaluru",
       "posterUrl": "images/screening2.jpg"
     }
   },
@@ -17,42 +18,42 @@
       "badge": "Pinned",
       "title": "OUM Memberships Now Open",
       "description": "Become an Official United Member today. Join MUSCB and be part of the official supporter community in Bengaluru. Registration is open now.",
-      "link": "https://tr.ee/yYmx1pF_Zm"
+      "link": "https://forms.gle/d9csbnU3xJFCGDcD7"
     },
     {
       "id": 2,
       "badge": "Screening",
       "title": "Next Match Screening",
       "description": "Details for the next United screening will be announced on our Instagram and WhatsApp community. Stay connected for venue and timing updates.",
-      "link": "https://tr.ee/LWCkHGoM0q"
+      "link": "https://chat.whatsapp.com/FRd6UXcesGNIMG5b4jgGy4?s=cl&p=i&ilr=1&amv=2"
     },
     {
       "id": 3,
       "badge": "Event",
       "title": "Upcoming Fan Meetup",
       "description": "United Fans Assemble is coming. RSVP through our link or WhatsApp. All MUSCB members and Manchester United fans in Bengaluru are welcome.",
-      "link": "https://tr.ee/yYmx1pF_Zm"
+      "link": "https://forms.gle/d9csbnU3xJFCGDcD7"
     },
     {
       "id": 4,
       "badge": "Football",
       "title": "Football Matchday Registration",
       "description": "Sign up for the next MUSCB football matchday. Open to all members. Intra-club matches with players of all skill levels. Let's play.",
-      "link": "https://tr.ee/LWCkHGoM0q"
+      "link": "https://chat.whatsapp.com/FRd6UXcesGNIMG5b4jgGy4?s=cl&p=i&ilr=1&amv=2"
     },
     {
       "id": 5,
       "badge": "Giveaway",
       "title": "MUSCB Giveaways & Drops",
       "description": "Watch our Instagram for exclusive MUSCB giveaways, signed memorabilia, merchandise drops, and member-only special offers.",
-      "link": "https://tr.ee/LWCkHGoM0q"
+      "link": "https://www.instagram.com/muscbengaluru"
     },
     {
       "id": 6,
       "badge": "Community",
       "title": "Join Our WhatsApp Community",
       "description": "Get real-time updates, match alerts, screening notifications, and connect with all MUSCB members on our WhatsApp community channel.",
-      "link": "https://tr.ee/LWCkHGoM0q"
+      "link": "https://chat.whatsapp.com/FRd6UXcesGNIMG5b4jgGy4?s=cl&p=i&ilr=1&amv=2"
     }
   ],
   "gallery": [
@@ -91,6 +92,60 @@
       "imageUrl": "images/gallery2.jpg",
       "title": "Community",
       "type": "standard"
+    }
+  ],
+  "team": [
+    {
+      "id": 1,
+      "name": "Shiva",
+      "designation": "President & Founder",
+      "imageUrl": ""
+    },
+    {
+      "id": 2,
+      "name": "Rohan",
+      "designation": "Vice President",
+      "imageUrl": ""
+    },
+    {
+      "id": 3,
+      "name": "Anirudh",
+      "designation": "Operations Head",
+      "imageUrl": ""
+    },
+    {
+      "id": 4,
+      "name": "Varun",
+      "designation": "Events & Matchdays Lead",
+      "imageUrl": ""
+    },
+    {
+      "id": 5,
+      "name": "Sneha",
+      "designation": "Social Media Lead",
+      "imageUrl": ""
+    }
+  ],
+  "chants": [
+    {
+      "id": 1,
+      "title": "Glory Glory Man United",
+      "lyrics": "Glory, glory, Man United,\nGlory, glory, Man United,\nGlory, glory, Man United,\nAnd the reds go marching on, on, on.\n\nFirst of all, there's Bobby Charlton,\nNext is Denis Law,\nAnd Bestie is the greatest,\nThat the world has ever seen."
+    },
+    {
+      "id": 2,
+      "title": "Take Me Home, United Road",
+      "lyrics": "Take me home, United road,\nTo the place, I belong,\nTo Old Trafford, to see United,\nTake me home, United road."
+    },
+    {
+      "id": 3,
+      "title": "Pride of All Europe",
+      "lyrics": "We are the Stretford Enders,\nAnd we are the Stretford Stretford End,\nWe're the pride of all Europe,\nThe cock of the North,\nWe hate the Scousers,\nAnd City of course."
+    },
+    {
+      "id": 4,
+      "title": "George Best Calypso",
+      "lyrics": "Going up to the spirit in the sky,\nIt's where I'm gonna go when I die,\nWhen I die and they lay me to rest,\nI'm gonna go on the piss with Georgie Best!"
     }
   ]
 }
