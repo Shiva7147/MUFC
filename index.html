@@ -36,17 +36,23 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="#home" class="nav-link tab-trigger active" data-target="home">Home</a></li>
     <li><a href="#membership" class="nav-link tab-trigger" data-target="membership">Membership</a></li>
-    <li><a href="#screenings" class="nav-link tab-trigger" data-target="screenings">Screenings</a></li>
+    <li><a href="#screenings" class="nav-link tab-trigger" data-target="screenings">Screening</a></li>
     <li><a href="#meetups" class="nav-link tab-trigger" data-target="meetups">Meetups</a></li>
-    <li><a href="#football" class="nav-link tab-trigger" data-target="football">Matchdays</a></li>
+    <li><a href="#football" class="nav-link tab-trigger" data-target="football">Match Day</a></li>
     <li><a href="#gallery" class="nav-link tab-trigger" data-target="gallery">Gallery</a></li>
-    <li><a href="#announcements" class="nav-link tab-trigger" data-target="announcements">Announcements</a></li>
+    <li><a href="#announcements" class="nav-link tab-trigger" data-target="announcements">Announcement</a></li>
     <li><a href="#chants" class="nav-link tab-trigger" data-target="chants">Chants</a></li>
     <li><a href="#team" class="nav-link tab-trigger" data-target="team">Core Team</a></li>
     <li class="mobile-only-link"><a href="#contact" class="nav-link modal-trigger-link">Have Questions?</a></li>
+    <li class="mobile-only-link"><a href="#admin-login-modal" class="nav-link" id="hamburger-admin-btn">Admin Portal</a></li>
     <li>
       <a href="https://beacons.ai/muscb" target="_blank" rel="noopener" class="btn btn-nav-cta" id="nav-join-btn">
         Join Now
+      </a>
+    </li>
+    <li>
+      <a href="#admin-login-modal" class="nav-admin-btn" id="navbar-admin-btn" title="Admin Portal" style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: var(--white-70); margin-left: 8px; transition: all 0.3s ease;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </a>
     </li>
   </ul>
@@ -235,9 +241,7 @@
  </div>
  </div>
  </section>
-    
-  <!-- Featured Screening Preview (Home Page) -->
-  <section class="section screenings-preview-section" id="home-screenings">
+    <section class="section screenings-preview-section" id="home-screenings">
     <div class="container animate-on-tab-active">
       <div class="section-label">Watch Live</div>
       <h2 class="section-title">Featured Match <span class="text-red">Screening</span></h2>
@@ -251,9 +255,7 @@
       </div>
     </div>
   </section>
-
-  <!-- Red Army Community Section (Home Page) -->
-  <section class="section community-section" id="community">
+    <section class="section community-section" id="community">
  <div class="container">
  <div class="section-label" data-animate="fade-up">The Red Army</div>
  <h2 class="section-title" data-animate="fade-up">
@@ -309,9 +311,39 @@
  </div>
  </div>
  </section>
+    
+  <!-- Membership Preview (Home Page) -->
+  <section class="section oum-preview-section" id="home-membership">
+    <div class="container animate-on-tab-active">
+      <div class="section-label">Official Membership</div>
+      <h2 class="section-title">Become an <span class="text-gold">Official Member</span></h2>
+      <p class="section-subtitle">Join the global Red Army and register with MUSCB to unlock exclusive local and international benefits.</p>
+      
+      <div class="oum-steps" style="margin-bottom: 40px; display: flex; gap: 20px;">
+        <div class="step-card" data-step="1" style="flex: 1; min-width: 250px;">
+          <div class="step-number">01</div>
+          <h3>Buy Your OUM</h3>
+          <p>Purchase a One United Membership (Full, Premium, Lite or Junior) on the official Man Utd website.</p>
+        </div>
+        <div class="step-card" data-step="2" style="flex: 1; min-width: 250px;">
+          <div class="step-number">02</div>
+          <h3>Use Bengaluru Address</h3>
+          <p>Provide a Bengaluru mailing address so you're mapped to the local supporters club.</p>
+        </div>
+        <div class="step-card" data-step="3" style="flex: 1; min-width: 250px;">
+          <div class="step-number">03</div>
+          <h3>Fill MUSCB Form</h3>
+          <p>Submit your OUM details in our official form to activate your local member perks.</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center;">
+        <a href="#membership" class="btn btn-gold tab-trigger" data-target="membership">View Membership Benefits &rarr;</a>
+      </div>
+    </div>
+  </section>
 
-  <!-- Gallery Highlights (Home Page) -->
-  <section class="section gallery-preview-section" id="home-gallery">
+    <section class="section gallery-preview-section" id="home-gallery">
     <div class="container animate-on-tab-active">
       <div class="section-label">Fan Moments</div>
       <h2 class="section-title">Gallery <span class="text-red">Highlights</span></h2>
@@ -325,22 +357,36 @@
       </div>
     </div>
   </section>
-
-  <!-- Chants Highlight (Home Page) -->
-  <section class="section chants-preview-section" id="home-chants">
+    
+  <!-- Meetups & Match Day Combined (Home Page) -->
+  <section class="section meetups-matchday-section" id="home-meetups-matchday">
     <div class="container animate-on-tab-active">
-      <div class="section-label">Matchday Atmosphere</div>
-      <h2 class="section-title">Stand Up & <span class="text-red">Sing</span></h2>
-      <p class="section-subtitle">Chant along with the Red Army during match screenings. Learn the lyrics to our famous fan anthems.</p>
+      <div class="section-label">Events & Football</div>
+      <h2 class="section-title">Meetups & <span class="text-red">Match Days</span></h2>
+      <p class="section-subtitle">We organize cafe meetups, social gatherings, and regular turf football games across Bengaluru.</p>
       
-      <div class="chants-preview-card">
-        <div class="chant-badge">🎵 Highlight Chant</div>
-        <h3>Glory Glory Man United</h3>
-        <p>"Glory, glory, Man United, Glory, glory, Man United..."</p>
-        <a href="#chants" class="btn btn-primary tab-trigger" data-target="chants">Listen & Learn Chants &rarr;</a>
+      <div class="meetups-matchday-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 30px;">
+        <div class="meetup-preview-card" style="background: var(--black-card); border: 1px solid var(--white-05); border-radius: var(--radius-lg); padding: 28px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px;">🤝 Cafe Meetups</div>
+            <h3 style="font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 10px;">United Fans Assemble</h3>
+            <p style="font-size: 13.5px; color: var(--white-60); line-height: 1.6; margin-bottom: 20px;">Connect with fellow Reds at cafes, exchange jerseys, participate in debates, and talk all things Manchester United.</p>
+          </div>
+          <a href="#meetups" class="btn btn-outline btn-sm tab-trigger" data-target="meetups" style="align-self: flex-start;">View Meetups &rarr;</a>
+        </div>
+        
+        <div class="matchday-preview-card" style="background: var(--black-card); border: 1px solid var(--white-05); border-radius: var(--radius-lg); padding: 28px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--red); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px;">⚽ Weekly Turf Games</div>
+            <h3 style="font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 10px;">Play for MUSCB FC</h3>
+            <p style="font-size: 13.5px; color: var(--white-60); line-height: 1.6; margin-bottom: 20px;">We book premium turfs across Bengaluru for regular scrimmages, tournaments, and coached friendly sessions. All levels welcome.</p>
+          </div>
+          <a href="#football" class="btn btn-outline btn-sm tab-trigger" data-target="football" style="align-self: flex-start;">View Match Days &rarr;</a>
+        </div>
       </div>
     </div>
   </section>
+
   </div>
   <!-- SPA VIEW: MEMBERSHIP -->
   <div id="view-membership" class="tab-view">
@@ -870,7 +916,7 @@
  </a>
  </div>
  <div class="footer-copyright">
- <p>© 2025 MUSCB &mdash; Manchester United Supporters Club Bengaluru. All rights reserved. <button id="footer-admin-btn" class="footer-admin-link">Admin Panel</button></p>
+ <p>© 2025 MUSCB &mdash; Manchester United Supporters Club Bengaluru. All rights reserved. <button id="footer-admin-btn" class="footer-admin-link" style="color: var(--gold) !important; text-decoration: underline; font-weight: bold; margin-left: 10px; opacity: 1;">Admin Portal</button></p>
  <p class="footer-disclaimer">This website is for the Manchester United supporters community in Bengaluru. MUSCB is an official Manchester United supporters club. Manchester United trademarks remain the property of Manchester United Ltd.</p>
  </div>
  <div class="footer-badge">

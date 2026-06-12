@@ -454,6 +454,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-emblem {
   margin-bottom: 32px;
 }
+.emblem-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .emblem-ring {
   border-radius: 50%;
   display: flex;
@@ -468,6 +476,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   animation: rotate-slow 20s linear infinite;
 }
 .emblem-ring.inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
   background: rgba(10,10,10,0.8);
@@ -1932,7 +1944,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .hero { min-height: 100svh; padding-bottom: 44px; }
   .hero-content { gap: 0; padding: 32px 0 40px; }
   .hero-badge { font-size: 9px; padding: 6px 12px; letter-spacing: 1px; margin-bottom: 24px; }
-  .emblem-ring.outer { width: 96px; height: 96px; margin-bottom: 24px; }
+  .emblem-wrapper { width: 96px; height: 96px; }
+  .emblem-ring.outer { width: 96px; height: 96px; margin-bottom: 0; }
   .emblem-ring.inner { width: 68px; height: 68px; }
   .emblem-logo-img { width: 38px; height: 38px; }
   .emblem-members-text span { font-size: 5.5px; }
@@ -2925,5 +2938,26 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     max-width: 280px;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+/* Meetups & Matchday preview grid layout */
+.meetups-matchday-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 768px) {
+  .meetups-matchday-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+  .oum-steps {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .oum-steps .step-card {
+    width: 100% !important;
+    min-width: unset !important;
   }
 }

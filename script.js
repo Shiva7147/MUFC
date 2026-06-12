@@ -56,8 +56,9 @@ function initActiveNavLinks() {
     'about': 'home',
     'home-screenings': 'home',
     'community': 'home',
+    'home-membership': 'home',
     'home-gallery': 'home',
-    'home-chants': 'home',
+    'home-meetups-matchday': 'home',
     'membership': 'membership',
     'benefits': 'membership',
     'screenings': 'screenings',
@@ -138,16 +139,29 @@ function initHamburger() {
 // ─── SMOOTH SCROLL ──────────────────────────────
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    const href = anchor.getAttribute('href');
-    if (href === '#meetups' || href === '#community' || href === '#contact') return; // Handled by modal script
-    
     anchor.addEventListener('click', function(e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (!target) return;
-      e.preventDefault();
-      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
-      const targetPos = target.getBoundingClientRect().top + window.scrollY - navH;
-      window.scrollTo({ top: targetPos, behavior: 'smooth' });
+      const href = this.getAttribute('href');
+      const targetId = href.substring(1);
+      
+      if (!targetId || targetId.includes('admin') || targetId.includes('contact')) return;
+      
+      const targetTab = tabMap[targetId];
+      const currentHash = window.location.hash.substring(1) || 'home';
+      const currentTab = tabMap[currentHash] || 'home';
+      
+      if (targetTab && targetTab !== currentTab) {
+        // Navigate to different tab view, let hashchange trigger
+        return;
+      }
+      
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        window.history.pushState(null, null, href);
+        const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+        const targetPos = targetEl.getBoundingClientRect().top + window.scrollY - navH;
+        window.scrollTo({ top: targetPos, behavior: 'smooth' });
+      }
     });
   });
 }
@@ -874,8 +888,9 @@ const tabMap = {
   'about': 'home',
   'home-screenings': 'home',
   'community': 'home',
+  'home-membership': 'home',
   'home-gallery': 'home',
-  'home-chants': 'home',
+  'home-meetups-matchday': 'home',
   'membership': 'membership',
   'benefits': 'membership',
   'screenings': 'screenings',
@@ -1047,6 +1062,8 @@ function initAdminDashboard() {
 
   if (navBtn) navBtn.addEventListener('click', triggerLogin);
   if (footBtn) footBtn.addEventListener('click', triggerLogin);
+  const hamAdminBtn = document.getElementById('hamburger-admin-btn');
+  if (hamAdminBtn) hamAdminBtn.addEventListener('click', triggerLogin);
 
   // Close wrappers
   if (closeLoginBtn) closeLoginBtn.addEventListener('click', () => closeModal(loginModal));
