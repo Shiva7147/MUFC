@@ -21,6 +21,69 @@ const MIME = {
 
 const server = http.createServer((req, res) => {
   let urlPath = req.url.split('?')[0];
+
+  // Intercept API routes for local development
+  if (urlPath === '/api/data') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200);
+      res.end();
+      return;
+    }
+
+    if (req.method === 'GET') {
+      const dbPath = path.join(ROOT, 'data.json');
+      fs.readFile(dbPath, 'utf8', (err, data) => {
+        if (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Failed to read database file' }));
+          return;
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(data);
+      });
+      return;
+    }
+
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        try {
+          const payload = JSON.parse(body);
+          
+          if (payload.password !== 'reddevils2026') {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: 'Unauthorized' }));
+            return;
+          }
+
+          const dbPath = path.join(ROOT, 'data.json');
+          fs.writeFile(dbPath, JSON.stringify(payload.data, null, 2), 'utf8', (err) => {
+            if (err) {
+              res.writeHead(500, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ success: false, error: 'Failed to write database file' }));
+              return;
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, message: 'Successfully saved to local disk!' }));
+          });
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: 'Invalid JSON payload' }));
+        }
+      });
+      return;
+    }
+
+    res.writeHead(405, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+    return;
+  }
+
   if (urlPath === '/') urlPath = '/index.html';
 
   const filePath = path.join(ROOT, urlPath);

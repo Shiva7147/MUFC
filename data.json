@@ -1,0 +1,96 @@
+{
+  "screenings": {
+    "featured": {
+      "competition": "Premier League",
+      "homeTeam": "MAN UTD",
+      "awayTeam": "TBD",
+      "date": "Date & Time TBA",
+      "venue": "Bengaluru Venue TBA",
+      "rsvpLink": "https://tr.ee/LWCkHGoM0q",
+      "instaLink": "https://tr.ee/LWCkHGoM0q",
+      "posterUrl": "images/screening2.jpg"
+    }
+  },
+  "announcements": [
+    {
+      "id": 1,
+      "badge": "Pinned",
+      "title": "OUM Memberships Now Open",
+      "description": "Become an Official United Member today. Join MUSCB and be part of the official supporter community in Bengaluru. Registration is open now.",
+      "link": "https://tr.ee/yYmx1pF_Zm"
+    },
+    {
+      "id": 2,
+      "badge": "Screening",
+      "title": "Next Match Screening",
+      "description": "Details for the next United screening will be announced on our Instagram and WhatsApp community. Stay connected for venue and timing updates.",
+      "link": "https://tr.ee/LWCkHGoM0q"
+    },
+    {
+      "id": 3,
+      "badge": "Event",
+      "title": "Upcoming Fan Meetup",
+      "description": "United Fans Assemble is coming. RSVP through our link or WhatsApp. All MUSCB members and Manchester United fans in Bengaluru are welcome.",
+      "link": "https://tr.ee/yYmx1pF_Zm"
+    },
+    {
+      "id": 4,
+      "badge": "Football",
+      "title": "Football Matchday Registration",
+      "description": "Sign up for the next MUSCB football matchday. Open to all members. Intra-club matches with players of all skill levels. Let's play.",
+      "link": "https://tr.ee/LWCkHGoM0q"
+    },
+    {
+      "id": 5,
+      "badge": "Giveaway",
+      "title": "MUSCB Giveaways & Drops",
+      "description": "Watch our Instagram for exclusive MUSCB giveaways, signed memorabilia, merchandise drops, and member-only special offers.",
+      "link": "https://tr.ee/LWCkHGoM0q"
+    },
+    {
+      "id": 6,
+      "badge": "Community",
+      "title": "Join Our WhatsApp Community",
+      "description": "Get real-time updates, match alerts, screening notifications, and connect with all MUSCB members on our WhatsApp community channel.",
+      "link": "https://tr.ee/LWCkHGoM0q"
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "imageUrl": "images/gallery1.jpg",
+      "title": "Fan Meetup",
+      "type": "tall"
+    },
+    {
+      "id": 2,
+      "imageUrl": "images/gallery1.jpg",
+      "title": "Match Celebration",
+      "type": "standard"
+    },
+    {
+      "id": 3,
+      "imageUrl": "images/screening2.jpg",
+      "title": "Match Screening",
+      "type": "standard"
+    },
+    {
+      "id": 4,
+      "imageUrl": "images/football_team.jpg",
+      "title": "MUSCB FC",
+      "type": "wide"
+    },
+    {
+      "id": 5,
+      "imageUrl": "images/old_trafford_night.jpg",
+      "title": "The Theatre of Dreams",
+      "type": "standard"
+    },
+    {
+      "id": 6,
+      "imageUrl": "images/gallery2.jpg",
+      "title": "Community",
+      "type": "standard"
+    }
+  ]
+}
